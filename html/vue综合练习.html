@@ -3,20 +3,68 @@
 <head>
 
     <meta charset="UTF-8">
-    <title></title>
-    <meta name="viewport"
-        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue综合练习</title>
 </head>
 
 <body>
 
+    <div id="app">
+        <fieldset>
+            <legend>学习查询</legend>
+            <div>
+                <span>姓名：</span>
+                <input type="text" placeholder="请输入姓名" />
+            </div>
 
-    <script>
-        const m = 0
-        console.log(m)
+            <div>
+                <span>年龄：</span>
+                <input type="text" placeholder="请输入年龄" />
+            </div>
+            <div>
+                <span>性别：</span>
+                <input type="radio" value="男" name="gender" checked /> 男
+                <input type="radio" value="女" name="gender"/> 女
+            </div>
+
+            <div>
+                <span>手机号码：</span>
+                <input placeholder="请输入手机号码" />
+            </div>
+            <div>
+
+                <span>兴趣爱好:</span>
+                <input type="checkbox" name="checkbox_basketball" value="打篮球" checked> 打篮球
+                <input type="checkbox" name="check_pingpang" value="打乒乓球" /> 打乒乓球
+                <input type="checkbox" name="check_game" value="玩游戏" /> 玩游戏
+
+            </div>
+            <div>
+                <span>外语语种:</span>
+                <select>
+                    <option value="英语">英语</option>
+                    <option value="日语">日语</option>
+                    <option value="俄语">俄语</option>
+                    <option value="法语">法语</option>
+                </select>
+            </div>
+        </fieldset>
+    </div>
+    <script src="../js/vue.js"> </script>
+    <script type="text/javascript">
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                persons: [
+                    { name: '张三', sex: '男', age: 33, phone: 13711011233, }
+                ]
+            },
+            methods: {
+
+            }
+        })
     </script>
-
 
 </body>
 
