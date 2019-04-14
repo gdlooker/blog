@@ -1,0 +1,53 @@
+~
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id="app">
+        <img v-bind:src="iconUrl" alt="姜正阳照片" @click="mmIcon1"/>
+        <img v-bind:src="iconUrl2" alt="姜正阳照片" v-on:click="mmIcon2"/>
+        <div v-for="(item,index) in collections" :class="index ===activeIndex ? 'active':''">
+            <div>{{item}}</div>
+        </div>
+    </div>
+
+
+    <script src="../js/vue.js"> </script>
+    <script type="text/javascript">
+        //1. 创建vue实例
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                message: "vue_mvvm模式",
+                iconUrl: 'https://tse1-mm.cn.bing.net/th?id=OIP.35w9wKPK4U9Yd09DSknH4AHaKX&w=189&h=265&c=7&o=5&pid=1.7',
+                iconUrl2: 'https://tse4-mm.cn.bing.net/th?id=OIP.X6uwojLCbfng6-pmYMLnSQAAAA&w=198&h=264&c=7&o=5&pid=1.7',
+                collections: [
+                    "ios",
+                    "android",
+                    "java",
+                    "web",
+                ],
+                activeIndex: 3,
+            },
+            methods: {
+                mmIcon1:function(){
+                    alert('mm1点击了')
+                },
+                mmIcon2:function(){
+                   alert('点击了美女，真的是骚')
+                }
+            }
+        })
+        console.log('d')
+    </script>
+</body>
+
+</html>
