@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Js原型链操作</title>
+</head>
+
+<body>
+    <div id="container">
+
+    </div>
+    <script type="text/javascript">
+
+        //定义一个Person
+        function Person(age, name) {
+            this.name = name
+            this.age = age;
+        }
+        Person.prototype = {
+            setName: function (name) {
+                this.name = name;
+            },
+            setAge: function (age) {
+                this.age = age
+            },
+            getName: function () {
+                return this.name
+            }
+        }
+        var person = new Person('23', 'zhangsan') //创建对象 通过构造器赋值
+        var name = person.getName()
+        console.log(name)
+        console.log(person)
+
+        
+    </script>
+</body>
+
+</html>
