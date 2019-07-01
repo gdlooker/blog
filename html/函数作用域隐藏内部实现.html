@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div id="btnOnclick">点击执行</div>
+    <script type="text/javascript">
+        //定义外部函数
+        // button.onclick = function foo() {
+        //     function bar(a) {
+        //         i = 3
+        //         console.log(i + a)
+        //     }
+
+        //     for (var i = 0; i < 10; i++) {
+        //         //调用函数
+        //         bar(i * 2)
+        //     }
+        // }
+        (function fob(){
+            console.log('闭包执行')
+        })()
+
+        //3s后执行
+        setTimeout(callBack,3000)
+        
+        function callBack(){
+             console.log('执行callback')
+             console.log(callBack)
+        }
+    </script>
+</body>
+
+</html>
