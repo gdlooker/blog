@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>你不知道的js上卷</title>
+
+    <h2>欺骗词法作用域</h2>
+</head>
+
+<body>
+    <div id="container">
+        <div id="header">头部</div>
+        <div id="content">内容区域</div>
+    </div>
+    <script type="text/javascript">
+        // 定义一个函数
+        // var b=2
+        function foo(str, a) {
+            eval(str)
+            console.log(a, b)
+        }
+        foo("var b=3", 1)
+        setTimeout("console.log(6)", 3000)
+    </script>
+</body>
+
+</html>
