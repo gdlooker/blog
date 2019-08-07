@@ -66,3 +66,118 @@
 
 3.3.1匿名函数和具名
 
+### 第五章 作用域和闭包
+
+常见闭包示例：
+
+ ```javascript
+function foo(){
+    var a=2 ;  //其实这里这个2就是闭包
+    function bar(){
+        console.log(a)  //内部函数引用外部函数的变量 就是闭包
+    }
+    return bar
+}
+
+var baz=foo(); //正是因为这个 res指向这个foo的返回值结果 也就是bar函数 它的存在导致外部函数foo无法进行回收
+baz() ；//调用baz其实是调用bar函数  其实闭包的产生是在var baz=foo()
+
+分析：1 函数bar的词法作用域能够访问foo()的内部作用域
+     2 然后我们将这个bar函数本身当作值类型进行传递
+     3 执行foo函数之后其返回值也就是bar函数本身赋值给变量baz并调用baz函数
+ ```
+
+循环和闭包的示例
+
+```javascript
+//来一个for循环
+for(var i=0;i<=5;i++){
+    setTimeout(function timer(){
+         console.log(i)
+    },1000)
+}
+逻辑分析：
+输出结果 输出了5个6 究竟是为什么呢？
+
+```
+
+js当中的模块
+
+##### 方式1（外部封闭函数模式）：
+
+```javascript
+function CoolModule(){
+    var something="cool" ;
+    var another=[1,2,3]
+    function doSomething(){
+        console.log(something);
+    }
+    function doAnother(){
+        console.log(another.join('！'))
+    }
+    return {
+        doSomething:doSomething,
+        doAnother:doAnother
+    }
+}
+
+```
+
+#### 代码分析：
+
+首先，CoolModule() 只是一个函数，必须要通过调用它来创建一个模块实例。如果不执行 
+
+外部函数，内部作用域和闭包都无法被创建。  
+
+其次 CoolModule()返回一个用对象字面量语法{key:value,...}来表示的对象。这个返回的对象中含有对内部函数的引用而不是内部数据变量的引用。这里只是私藏了内部数据变量，就是将这个对象类型的返回值当作是模块的公共API.
+
+模块模式需要具备两个必要条件
+
+1 必须有外部的封闭函数，且该函数至少被调用一次（每次调用都会创建一个新的模块实例）。
+
+2 封闭函数必须返回至少一个内部函数，这样内部函数才能在私有作用域中形成闭包，并且可以访问或者修改私有的状态。
+
+##### 方式2 立即执行函数模式（可以创建单例模式）
+
+代码如下：
+
+```javascript
+var foo = (function CoolModule() { 
+var something = "cool"; 
+var another = [1, 2, 3]; 
+function doSomething() { 
+console.log( something ); 
+} 
+
+function doAnother() { 
+console.log( another.join( " ! " ) ); 
+} 
+return { 
+doSomething: doSomething, 
+doAnother: doAnother 
+})(); 
+```
+
+##### 现代模块机制
+
+```javascript
+var MyModules=(function Manager(){
+	var modules={}
+    function deine(name,deps,impl){
+        for(var i=0;i<deps.length;i++){
+            deps[i]=modules[deps[i]]
+        }
+        modules[name]=impl.apply(impl,deps)
+    }
+    function get(name){
+        return modules[name]
+    }
+    return {
+        define:define,
+        get:get
+    }
+})()
+```
+
+##### 代码剖析
+
