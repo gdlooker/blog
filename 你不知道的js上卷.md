@@ -179,5 +179,68 @@ var MyModules=(function Manager(){
 })()
 ```
 
-##### 代码剖析
+##### 第二部分 this和对象原型
+
+不知道的js上卷， 人们通常很容易的把this指向理解成指向函数自身，这个推断逻辑在英语语法角度来说就是这样的。
+
+那么现在的问题是this为什么会需要从函数内部引用函数自身呢？ 
+
+常见的原因是递归（自己调用自己）或者可以写一个在第一次被调用后自己解除绑定的事件处理器。
+
+```javascript
+ //声明一个foo函数
+function foo(num) { 
+console.log( "foo: " + num ); 
+// 记录 foo 被调用的次数 
+this.count++; 
+}
+//给函数添加属性 count 函数也是对象  可以打印window查看foo函数
+foo.count = 0; 
+var i; 
+for (i=0; i<10; i++) { 
+
+if (i > 5) { 
+foo( i ); 
+} 
+}
+//输出结果 6  7  8  9
+console.log(foo.count) //输出0
+```
+
+以上代码为什么foo.count=0呢？
+
+###### 分析:
+
+当执行foo.count时的确向函数对象foo添加了一个属性count.但是函数内部代码this.count中的
+
+this并不是指向那个函数对象，所以虽然属性名称相同。但是他们的对象不是同一个对象
+
+this.count这个this指的是window这个对象
+
+foo这个函数名称是window的一个属性
+
+这个时候它的this.count 是NaN  为什么会是NaN呢?
+
+因为调用foo函数的时候，this.count是没有被定义的也就是所谓的undefined。 其实就是让undefined++ ，也就是进行数据类型的+法操作  所以NaN+1 之后还是NaN
+
+由此可见，如果要从函数对象内部引用它自身，那只使用this是不够的。一般来说你需要通过一个指向函数对象的词法标识符（变量来引用它）。
+
+思考一下下面这两个函数：
+
+```javascript
+function foo(){
+    foo.count=4; //foo指向它自身
+}
+setTimeout(function(){
+   //匿名（没有名字）函数无法指向函数本身
+},1000)
+```
+
+分析：在这个例子中，setTimeout函数的回调函数没有名称标识符（这种函数被称为匿名函数）,因此
+
+你无法从函数内部引用自身的方法。
+
+还有一种传统的但是现在已经被弃用和批判的用法，是使用arguments.callee来引用当前正在运行的函数对象。然而更好的方式是避免使用匿名函数，至少在需要的时候自引用时使用具名函数。arguments.callee已经被弃用，不应该再使用它。
+
+
 
