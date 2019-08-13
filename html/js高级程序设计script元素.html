@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>js高级程序设计script元素</title>
+</head>
+
+<body>
+
+    <div class="test">
+        测试
+    </div>
+    <div>
+        我是文本元素
+    </div>
+
+    <!-- async 规定将脚本执行为异步 
+      详解地址：https://www.w3school.com.cn/html5/att_script_async.asp
+      详解地址：https://segmentfault.com/q/1010000000640869
+      defer跟async (仅适用于外部脚本）
+      如果使用 "src" 属性，则 <script> 元素必须是空的
+      有 async，加载和渲染后续文档元素的过程将和 script.js 的加载与执行并行进行（异步）。 
+      1 如果没有async或者defer  浏览器会立即加载并执行指定脚本。 默认情况
+      2 如果有async 它表示的是当前script src指向的这个脚本跟 当前的script是异步执行  
+      defer表示完全等文档被解析和显示之后
+
+     
+    -->
+    <script type="text/javascript" charset="UTF-8" >
+        var classArr = document.getElementsByClassName('test')
+        var obj = classArr[0]
+        obj.onclick = function () {
+            console.log('点击了')
+            obj.innerText = "bbb"
+            sayScript()
+        }
+
+        //dowcument.write是替换所有元素  可以演示通过演示看出来
+        function sayScript() {
+            document.write('写出sayScript')
+        }
+
+
+    </script>
+    <script src="../js/jsScript.js" type="text/javascript" defer></script>
+    <div id="div">
+        我是div
+    </div>
+    <!-- 总结
+      不在script中使用 async跟defer 
+    -->
+</body>
+
+</html>
