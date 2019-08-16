@@ -257,11 +257,65 @@ var MyModules=(function Manager(){
 
 ##### 第二部分 this和对象原型
 
-不知道的js上卷， 人们通常很容易的把this指向理解成指向函数自身，这个推断逻辑在英语语法角度来说就是这样的。
+1 this是个关键字
 
-那么现在的问题是this为什么会需要从函数内部引用函数自身呢？ 
+我们要思考为什么要使用this这个关键字？它解决了什么问题？
 
-常见的原因是递归（自己调用自己）或者可以写一个在第一次被调用后自己解除绑定的事件处理器。
+this这个关键字可以隐式的来传递一个对象的引用。它解决了显示传递引用的困难问题。
+
+首先我们来看一段使用this关键字传递对象引用示例代码：
+
+```javascript
+function identify(){
+    return this.name.toUpperCase();
+}
+function speak(){
+    var greeting ="hello,I'm"+identify.call(this);
+    console.log(greeting)
+}
+var me={
+    name:'Kyle'
+}
+var you={
+    name:'Reader'
+}
+identify.call(me) //传入一个me对象  就是让这个ientify这个函数里面的这个作用域的this指向me，因此输出 KYLE
+identify.call(you);//READER 这个name
+speak.call(me);  //呼叫me
+speak.call(you); //呼叫you
+
+```
+
+如果我们这里不使用this?会出现什么问题？
+
+我们来看一段示例代码,如下：
+
+```javasc
+function identify(context){ //这里需要显示的传入一个上下文对象
+    return context.name.toUpperCase();
+}
+function speak(context){
+     //声明这样一个函数
+     var greating ="Hello world,I'm"+identify(context)
+}
+var you={
+    name:'Reader'
+}
+var me={
+    name:'kyle'
+}
+identify(you); //READER
+speak(me); //hello,我是KYLE
+
+```
+
+说白了  this就是为了解决 函数参数显示传递对象的混乱问题。
+
+###### 误解：this并不是指向函数本身 跟英语有所区别.
+
+1 那么什么时候让this强行指向它自己本身呢？ 比如递归
+
+2 function.call(function) 或者apply
 
 ```javascript
  //声明一个foo函数
@@ -282,6 +336,14 @@ foo( i );
 //输出结果 6  7  8  9
 console.log(foo.count) //输出0
 ```
+
+
+
+不知道的js上卷， 人们通常很容易的把this指向理解成指向函数自身，这个推断逻辑在英语语法角度来说就是这样的。
+
+那么现在的问题是this为什么会需要从函数内部引用函数自身呢？ 
+
+常见的原因是递归（自己调用自己）或者可以写一个在第一次被调用后自己解除绑定的事件处理器。
 
 以上代码为什么foo.count=0呢？
 
@@ -317,6 +379,19 @@ setTimeout(function(){
 你无法从函数内部引用自身的方法。
 
 还有一种传统的但是现在已经被弃用和批判的用法，是使用arguments.callee来引用当前正在运行的函数对象。然而更好的方式是避免使用匿名函数，至少在需要的时候自引用时使用具名函数。arguments.callee已经被弃用，不应该再使用它。
+
+```{
+function foo(){
+     var a=2;
+     this.bar();
+}
+function bar(){
+	console.log('bar函数被调用’)
+    console.log(this.a)
+}
+var bar=6;
+console.log(bar)
+```
 
 
 
