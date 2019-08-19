@@ -162,3 +162,145 @@ String数据类型包含一些特殊的字符字面量，也叫转义序列，�
 
 在ECMAScript中的字符串是不可变的，也就是说，字符串一旦被创建，它们的值就不能改变。要改变某个变量保存的字符串，首先要销毁原来的字符串。
 
+#####  js的逻辑操作符
+
+举其中一个例子：
+
+```javascript
+<script type="text/javascript">
+        //逻辑与 有一个不是boolean值的情况下 遵循以下原则
+        var result = true && false;
+        console.log('result', result); //输出 false 
+        //逻辑与：只有2个同时为true的时候才为true
+        const obj = {}
+        var test2 = obj && false;
+        console.log(test2)  //false
+        var test3 = obj && true;
+        console.log(test3); // true  如果第一个为对象 则返回第二个操作数
+
+        //如果第一个数是字符串 返回第二个数
+        var test4 = "string" && false
+        console.log('test4', test4) // false
+
+        //如果第二个数据是对象
+        var test5 = true && {}
+        console.log('test5', test5) // 输出  {}
+
+        //如果第二个数据是字符串
+        var test6 = true && 'abc';
+        console.log('test6', test6) //输出 abc 
+        //逻辑与  就是a和b2个同时满足的情况下 才为true 如果第一个为true 才对第二个值进行操作
+
+        //如果第二个数是字符串 则返回第二个数
+        var test7='字符串test7' ;
+        console.log(false && test7) ;
+        console.log(true && test7) ;
+
+        //如果2个数同时为对象则返回第二个数
+        //如果第一个操作数是null ,则返回null 
+        // 如果第一个操作数是NaN，则返回NaN
+        //如果第一个操作数是undefined,则返回underfined 
+
+        //详情参见js高级程序设计 3.5.3 布尔操作符
+        console.log(65/11)
+        
+```
+
+... 总结：js高级程序设计第三章讲的基本数据类型，个人感觉要全部记清楚是一个非常头疼的问题，这个要靠平常实战项目开发的日积月累。
+
+&& （逻辑与）：2个全部为true的时候才返回true. 如果有一个不为布尔值  可以看上面的示例代码，或者自己
+
+在控制台输出测试。
+
+个人在开发中一般会比较常用的是 逻辑非 强行转化为布尔值，因为安全不会报错,按照js高级程序设计上所说的也是，任何类型的数据都可以通过逻辑非转话为true或者false.不多说了，直接第四章走起。
+
+##### 第四章 变量作用域和内存问题
+
+###### 4.1基本数据类型和引用数据类型
+
+6种基本数据类型：Undefined，Null,Boolean,Number,String,Symbol.基本数据类型也叫原始数据类型。
+
+引用数据类型：对象,数组，Date等。type of用于检测是不是对象.
+
+###### 注意: js跟Java这里有所不同，在Java中。字符串是引用数据类型。Java定义了一个String类。
+
+###### 4.1.1动态属性
+
+定义基本数据类型跟定义引用数据类型的方式是基本上相同的。但是在为变量进行赋值的时候，基本数据类型跟
+
+引用数据类型的时候，两者是不同的。
+
+###### 应用类型示例代码如下：
+
+```javascript
+var person=new Object() ;//创建一个对象
+//为对象添加属性
+person.name="张三" ;
+console.log(person.name);//输出张三
+```
+
+以上代码创建了一个对象，然后将其保存在变量person中。然后我们为其添加了一个person的属性。
+
+并将其字符串给了name这个属性。如果对象不被销毁，那么该属性name将一直存在。
+
+###### 基本数据类型示例代码如下：
+
+```javascript
+//声明一个数
+var name='张三';
+name.age=36 ;
+console.log(name.age);//输出undefined
+```
+
+###### 4.1.2 复制变量值
+
+```javascript
+var num1=5 ;
+var num2=num1;
+```
+
+基本数据类型是复制值。如果是引用类型的话这里就是2个类型变量指向同一个地址，
+
+这个跟Java没什么区别。
+
+总之就是 对象存在于堆内存中，基本数据类型.
+
+###### 4.1.3传递参数
+
+基本数据类型传参情况:
+
+```javascript
+function addTen(num){ //函数参数num
+    num+=10 ;
+    return num;
+}
+var count=20 ; //定义一个变量
+var result=addTen(count) ;
+console.log(count) ;//输出 20 说明 基本数据类型传递参数不是按照引用传递
+```
+
+引用数据类型传参情况:
+
+示例代码如下：
+
+```javascript
+function setName(obj){
+    obj.name="zhangsan" ；
+}
+var person=new Person() ;
+setName(person); //传入的是引用
+console.log(person.name); // zhangsan
+```
+
+注意：这里的obj是引用地址值的拷贝
+
+4.1.4检测类型
+
+type of用来检测基本数据类型。type of检测函数会返回 ‘function’
+
+type of检测对象没意义，用处不大，instanceof用来检测对象。
+
+###### 4.2执行环境以及作用域
+
+执行环境：定义变量或者函数有权访问其它数据，决定了各自的行为。每个执行环境都有一个与之关联的变量对象。
+

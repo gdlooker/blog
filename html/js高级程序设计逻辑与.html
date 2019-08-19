@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>js高级程序设计逻辑与元素</title>
+
+</head>
+
+<body>
+
+    <script type="text/javascript">
+        //逻辑与 有一个不是boolean值的情况下 遵循以下原则
+        var result = true && false;
+        console.log('result', result); //输出 false 
+        //逻辑与：只有2个同时为true的时候才为true
+        const obj = {}
+        var test2 = obj && false;
+        console.log(test2)  //false
+        var test3 = obj && true;
+        console.log(test3); // true  如果第一个为对象 则返回第二个操作数
+
+
+        //如果第一个数是字符串 返回第二个数
+        var test4 = "string" && false
+        console.log('test4', test4) // false
+
+        //如果第二个数据是对象
+        var test5 = true && {}
+        console.log('test5', test5) // 输出  {}
+
+        //如果第二个数据是字符串
+        var test6 = true && 'abc';
+        console.log('test6', test6) //输出 abc 
+        //逻辑与  就是a和b2个同时满足的情况下 才为true 如果第一个为true 才对第二个值进行操作
+
+        //如果第二个数是字符串 则返回第二个数
+        var test7='字符串test7' ;
+        console.log(false && test7) ;
+        console.log(true && test7) ;
+
+        //如果2个数同时为对象则返回第二个数
+        //如果第一个操作数是null ,则返回null 
+        // 如果第一个操作数是NaN，则返回NaN
+        //如果第一个操作数是undefined,则返回underfined 
+
+        //详情参见js高级程序设计 3.5.3 布尔操作符
+        console.log(65/11)
+        
+        
+    </script>
+</body>
+
+</html>
