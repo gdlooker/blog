@@ -37,9 +37,9 @@
         //逻辑与  就是a和b2个同时满足的情况下 才为true 如果第一个为true 才对第二个值进行操作
 
         //如果第二个数是字符串 则返回第二个数
-        var test7='字符串test7' ;
-        console.log(false && test7) ;
-        console.log(true && test7) ;
+        var test7 = '字符串test7';
+        console.log(false && test7);
+        console.log(true && test7);
 
         //如果2个数同时为对象则返回第二个数
         //如果第一个操作数是null ,则返回null 
@@ -47,9 +47,26 @@
         //如果第一个操作数是undefined,则返回underfined 
 
         //详情参见js高级程序设计 3.5.3 布尔操作符
-        console.log(65/11)
-        
-        
+        console.log(65 / 11)
+        var a = 10;
+        function one() {
+            var a = 6;
+            var get = function () {
+                console.log(this);
+                console.log(a);//6
+            }
+            get();
+        }
+        one();
+        var obj2 = {
+            a: 25,
+            get: function () {
+                console.log(this);
+                console.log(a);//10
+            }
+        }
+
+        obj2.get()
     </script>
 </body>
 
