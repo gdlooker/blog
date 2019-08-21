@@ -497,3 +497,415 @@ slice() //这个是删除 返回一个新的数组 不改变原始数组
 sort() //排序
 
 reverse() // 数组倒过来
+
+js数组示例代码如下：
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>javascript高级程序设计数组骚操作</title>
+</head>
+
+<body>
+
+    <div class="container">
+
+    </div>
+    <script type="text/javascript">
+
+        //定义一个数组
+        var arrData = ['数据1', 22, 33, "数据2"]
+        const delData = arrData.slice(0, 1)
+        console.log(delData);  //获取删除的数组
+        console.log(arrData)  //输出原始数组  说明不改变原始数组
+        arrData.splice(2, 0, "new1", "new2", 'new3')
+        console.log(arrData)
+        var colors = ['red', 'blue', 'green']
+        colors.unshift('yellow', 'dark') //从头部插入一个参数列表
+        console.log('colors', colors)
+        colors.shift()
+        console.log(colors)
+
+        //sort使用 
+        var values = [0, 99, 996, 5, 10, 15]
+        values.sort();  //数组排序
+        console.log(values)
+        //数组翻转
+        values.reverse();
+        console.log(values)
+        var res = values.join('|')
+        console.log('res', res)
+        console.log('=====================javascript的set使用,es6使用,可以作数组去重====================================')
+        var set = new Set([10, 66])
+        console.log('set', set)
+
+        console.log('============js数组的of循环一般很少使用==================')
+        var array2 = [33, 99, 66, 10.22]
+        //of遍历数组
+        for (let v of array2) {
+            console.log('v', v)
+        }
+        console.log('map的使用==============map键值对=======================对应Java的map差不多');
+        var map = new Map();
+        console.log(map.size)
+        map.set('key1', 'value1')
+        map.set('key2', 'value2')
+        console.log(map.size)
+        map.clear()
+        console.log(map.size)
+
+
+        console.log('=======================js数组的every函数的用法===============================')
+        //every() 对数组的每一项都返回true则返回true 否则返回false
+        var everyList = [10, 15, 19, 99, 36, 4]
+        var resEvery = everyList.every(function (value, index) {
+            console.log('item遍历项', value)
+            return value < 19
+        })
+        console.log(everyList)
+        console.log(resEvery)   // 输出遍历了3次  当 遍历到item=19的时候返回false
+
+        console.log('=======================js数组的every函数的用法===============================')
+        //如果这个数组里面有一个东西返回为true则 立即终止 不再遍历 
+        var someList = [10, 15, 19, 99, 36, 4]
+        someList.some(function (value, index) {
+            console.log("item",value); //输出 10  15  19  99  因为99>19
+            return value > 19
+        })
+        console.log('===============javascript的reduce用法===========')
+
+        var reduceArray=[
+             1,
+             2,
+             3,
+             4,
+             5
+        ];
+        var reduceRes=reduceArray.reduce(function(prev,cur,index,array){
+            return prev+cur
+        })
+        console.log(reduceRes)
+        //reduce练习题 可以计算1+2+3+..+99
+        var forReduceArray=[]
+        for(let i=0;i<100;i++){
+            forReduceArray.push(i)
+        }
+        var forReduceRes=forReduceArray.reduce(function(prev,cur,index,array){
+             return prev+cur;
+        })
+        console.log('forReduceRes结果',forReduceRes)
+    </script>
+</body>
+
+</html>
+```
+
+js的Date示例代码如下：
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>js高级程序设计Date</title>
+</head>
+<body>
+        <script type="text/javascript">
+             var someDate=new Date(Date.parse("March 25,2019"))
+             console.log(someDate)
+             //日期格式化方法
+             var date=new Date();
+             console.log(date.toDateString())  //输出星期 月 日 年
+             console.log(date.toTimeString())  //输出 时 分 秒 时区
+             console.log(date.getTime())   //输出毫秒数 与valueOf返回的相同
+             console.log(date.getFullYear()) ;//获取年份 
+             console.log(date.getMonth())  //获取月份  月份—1   从0开始
+             console.log(date.getHours())   //获取小时
+             console.log(date.getMinutes())  //获取分钟
+             console.log(date.getSeconds()) ;//获取秒数
+             console.log(date.getMilliseconds())  //获取毫秒数
+
+        </script>
+</body>
+</html>
+```
+
+js正则表达式示例代码如下：
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>js高级程序设计正则表达式</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+        // 正则表达式
+        //var expression=/pattern/flags  ;  
+        //.flags  g  表示全局搜索  i表示不区分大小写  m表示多行模式
+
+        var p = /[bc]at/g;//
+        var regExp = new RegExp('[bc]at', 'g'); //跟上面是等价的
+        console.log(p.global)
+        console.log(regExp.global)  //表示是否设置了  g标志
+        console.log('reg', regExp.ignoreCase)
+        console.log('multiline', p.multiline) //是否设置了m标志
+        console.log('lastIndex', p.lastIndex) //整数
+        var res = regExp.test('ckkdkdkbatddd');
+        console.log(res)
+    </script>
+</body>
+
+</html>
+```
+
+##### 5.5 Function类型
+
+```javascript
+//函数声明方式
+function sum(num1,num2){
+    return num1+num2;
+}
+//函数表达式 方式
+var sum=function(num1,num2){
+    return num1+num2;
+}
+//具名函数表达式
+var sum=function sumMethod(num1,num2){
+    return num1+num2;
+}
+
+//不推荐方式
+var sum=new Function('num1','num2','return num1+num2');//不推荐  影响性能
+
+```
+
+##### 5.5.1 没有重载（深入理解）
+
+```javascript
+function addSomeNumber(num){
+		return num+100;
+}
+```
+
+函数名仅仅是指向函数的指针，因此函数名与包含对象指针的其它变量，没有什么不同。
+
+js中函数没有重载.
+
+##### 5.5.2 函数声明与函数表达式
+
+```javascript
+//第一步 声明函数
+function sum(sum1,sum2){
+     return  num1+num2;
+}
+//调用函数
+console.log(sum(10,10)) ;//输出结果为20 
+
+//定义一个变量 指向一个函数  用一个变量指针 指向函数变量指针 其实就是复制了一个函数变量指针而已。
+var anotherSum=sum;
+console.log(anotherSum(10,10)); //输出20
+//置空变量 sum
+sum=null;   //虽然变量置空了，这里只是置空的是变量指针，而sum的函数还是存在的
+console.log(anotherSum(10,10)) ; //依然输出
+a
+```
+
+同时声明2个同名函数，后面的函数会覆盖前面的函数。
+
+*函数声明示例代码：
+
+```javascript
+console.log(sum(10,10)) ;//调用函数  输出20
+//函数声明
+function sum(num1,num2){
+    return num1+num2
+}
+//以上示例说明了在js中是函数声明可以提升，可以先调用后声明，实际上是在js引擎会自动提升function
+//先自动把函数提升到最前面。
+```
+
+*函数表达式：
+
+```javascript
+console.log(sum(10,10)) ;//先调用函数
+//如果这里使用的是函数表达式 在调用之后 这里会抛出异常
+var sum=function(){
+     return sum1+sum2 ;
+}；
+//以上代码运行直接报错 因为sum是变量 按照js的词法作用规则会左边进行lhs查询 是在编译阶段执行。 右边是在执行阶段进行的rhs查询
+```
+
+###### 总结：以上代码说明js函数声明可以提前，并且函数和变量同名的时候，函数会被js引擎自动提升到最前面.
+
+##### 5.5.3 作为值的函数
+
+在ECMAscript中函数本身就是变量，所以函数也可以当作值来使用。也就是说在js中函数可以当作值来传递参数，传递个另外一个函数。
+
+示例代码：
+
+```javascript
+//声明一个函数接收2个参数
+function callSomeFunction(someFunction,someArgument){
+    return someFunction(someArgument);
+}
+function add10(num){
+     return num+10;
+}
+//其实这个例子中重点就是这个add10 这个add10是这个函数本身，而不需要加上（）,加上括号是函数的返回值.
+var result1=callSomeFunction(add10,10);
+function getGreeting(name){
+     return "Hello,"+name;
+}
+var result2=callSomeFunction(getGreeting,'Nicholas')；
+console.log(result2) ; //输出 "Hello, Nicholas"
+```
+
+##### 排序：js中数组的sort方法直接排序有问题，所以它支持了一个带函数的参数。即使js比较的是整型的数组，也是会把数字转化为字符串来比较。
+
+```javascript
+var data = [{name: "Zachary", age: 28}, {name: "Nicholas", age: 29}];
+function  createComparisonFunction(propertyName){
+    return function(object1,object2){
+        var value1=object1[propertyName];
+        var value2=object2[propertyName]；
+        if(value1<value2){
+            return -1; //表示前面一个数小于后面的数
+        }else if(value1>value2){
+            return 1; //表示前面一个数字大于后面一个数
+        }else {
+             return 0 ;// 表示2个相等
+        }
+    }
+}
+//调用数组的排序方法
+data.sort(createComparisonFunction('name')) ;
+console.log(data[0].name);
+
+```
+
+##### 5.5.4函数内部属性
+
+递归 ：就是自己调用自己 ，例如求阶乘
+
+##### arguments.callee
+
+递归示例：
+
+```javascript
+function factorial(num){
+    if(num<=1){
+        return 1;
+    }
+    return num*factorial(num-1) ; //或者使用return num*arguments.callee(num-1);
+}
+```
+
+**注意：函数的名字仅仅是一个包含指针的变量而已。因此，即使在不同环境中执行，全局环境的函数跟对象中的函数指向的依然是同一个对象。**
+
+##### caller属性
+
+```javascript
+function outer(){
+     inner();
+}
+function inner(){
+    console.log(inner.caller); //
+    innerIn();
+}
+function innerIn(){
+     console.log(innerIn.caller); // 指向了inner函数 
+}
+outer(); //inner.caller指向了outer()
+//说明function.caller指向了调用它的函数
+```
+
+
+
+bind函数的用法
+
+```javascript
+window.color="red" ;
+var o={color:'blue'};
+function sayColor(){
+    console.log(this.color);
+}
+var objectSayColor=sayColor.bind(o);
+objectSayColor(); //blue
+```
+
+##### 5.6：js的包装类型：
+
+```javascript
+var s1="some text" ;//字符串
+var s2=s1.substring(2);
+s1=null;
+//以上代码其实做了三件事情
+//1 创建String类型的一个实例
+//2 在实例上调用指定的方法
+//3 销毁这个实例
+//等同于一下代码
+var s1=new String('some text');
+var s2=s2.substring(2);
+s1=null;
+ //区别
+```
+
+##### 总结：2个的区别，使用new操作符创建的实例，在离开当前作用域之前会一直保存在内存中，而自动创建的基本包装类型的对象则只存在于一行代码的执行瞬间，然后立即销毁（这里指的是销毁的堆内存），所以不能在运行时候添加属性和方法。
+
+Object的构造函数也会像工厂方法一样。根据传入值的类型返回相应基本包装类型的实例.
+
+```javascript
+var obj=new Object('some text');
+console.log(obj instanceof String);
+//把字符串传给Object类型，就会创建String实例,而传入数值参数会得到Number的实例，传入boolean就会得到boolean的实例。
+var value='25';
+var number=Number(value) ;//转型函数 将字符转化为整型 
+console.log(typeof number) // "number"
+var obj=new Number(value) //构造函数
+console.log(typeof obj); // "object"
+```
+
+num.toFixed(num.toFixed());//
+
+包装类js跟Java这里好像有点区别：
+
+在js中  var  num=22 ; // 相当于会执行  var num=new Number(22) ;
+
+在Java中执行 int num=22 ; //在Java里面好像是不会的，在自己定义一个包装类型的对象时，如下：
+
+//Integer i1 = 40;//Java在编译的时候会执行将代码封装成Integer i1=Integer.valueOf(40)
+
+##### 5.6.3 String类型
+
+字符串链接:
+
+```javascript
+var sringValue="hello ";
+var result =stringValue.concat('world');
+console.log(result); //结果  "hellw world"
+console.log(stringValue); // ”hello“
+```
+
+##### 5.7.3单体内置对象
+
+Global对象：
+
+URL地址处理编码解码方法：
+
+编码： encodeURI()encodeURIComponent()
+
+解码：decodeURI()和 decodeURIComponent()
+

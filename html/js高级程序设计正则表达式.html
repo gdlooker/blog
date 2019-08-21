@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>js高级程序设计正则表达式</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+        // 正则表达式
+        //var expression=/pattern/flags  ;  
+        //.flags  g  表示全局搜索  i表示不区分大小写  m表示多行模式
+
+        var p = /[bc]at/g;//
+        var regExp = new RegExp('[bc]at', 'g'); //跟上面是等价的
+        console.log(p.global)
+        console.log(regExp.global)  //表示是否设置了  g标志
+        console.log('reg', regExp.ignoreCase)
+        console.log('multiline', p.multiline) //是否设置了m标志
+        console.log('lastIndex', p.lastIndex) //整数
+        var res = regExp.test('ckkdkdkbatddd');
+        console.log(res)
+    </script>
+</body>
+
+</html>

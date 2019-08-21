@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>js高级程序设计Date</title>
+</head>
+<body>
+        <script type="text/javascript">
+            
+             var someDate=new Date(Date.parse("March 25,2019"))
+             console.log(someDate)
+             //日期格式化方法
+             var date=new Date();
+             console.log(date.toDateString())  //输出星期 月 日 年
+             console.log(date.toTimeString())  //输出 时 分 秒 时区
+             console.log(date.getTime())   //输出毫秒数 与valueOf返回的相同
+             console.log(date.getFullYear()) ;//获取年份 
+             console.log(date.getMonth())  //获取月份  月份—1   从0开始
+             console.log(date.getHours())   //获取小时
+             console.log(date.getMinutes())  //获取分钟
+             console.log(date.getSeconds()) ;//获取秒数
+             console.log(date.getMilliseconds())  //获取毫秒数
+
+        </script>
+</body>
+</html>

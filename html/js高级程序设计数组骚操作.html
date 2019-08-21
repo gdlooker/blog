@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>javascript高级程序设计数组骚操作</title>
+</head>
+
+<body>
+
+    <div class="container">
+
+    </div>
+    <script type="text/javascript">
+
+        //定义一个数组
+        var arrData = ['数据1', 22, 33, "数据2"]
+        const delData = arrData.slice(0, 1)
+        console.log(delData);  //获取删除的数组
+        console.log(arrData)  //输出原始数组  说明不改变原始数组
+        arrData.splice(2, 0, "new1", "new2", 'new3')
+        console.log(arrData)
+        var colors = ['red', 'blue', 'green']
+        colors.unshift('yellow', 'dark') //从头部插入一个参数列表
+        console.log('colors', colors)
+        colors.shift()
+        console.log(colors)
+
+        //sort使用 
+        var values = [0, 99, 996, 5, 10, 15]
+        values.sort();  //数组排序
+        console.log(values)
+        //数组翻转
+        values.reverse();
+        console.log(values)
+        var res = values.join('|')
+        console.log('res', res)
+        console.log('=====================javascript的set使用,es6使用,可以作数组去重====================================')
+        var set = new Set([10, 66])
+        console.log('set', set)
+
+        console.log('============js数组的of循环一般很少使用==================')
+        var array2 = [33, 99, 66, 10.22]
+        //of遍历数组
+        for (let v of array2) {
+            console.log('v', v)
+        }
+        console.log('map的使用==============map键值对=======================对应Java的map差不多');
+        var map = new Map();
+        console.log(map.size)
+        map.set('key1', 'value1')
+        map.set('key2', 'value2')
+        console.log(map.size)
+        map.clear()
+        console.log(map.size)
+
+
+        console.log('=======================js数组的every函数的用法===============================')
+        //every() 对数组的每一项都返回true则返回true 否则返回false
+        var everyList = [10, 15, 19, 99, 36, 4]
+        var resEvery = everyList.every(function (value, index) {
+            console.log('item遍历项', value)
+            return value < 19
+        })
+        console.log(everyList)
+        console.log(resEvery)   // 输出遍历了3次  当 遍历到item=19的时候返回false
+
+        console.log('=======================js数组的every函数的用法===============================')
+        //如果这个数组里面有一个东西返回为true则 立即终止 不再遍历 
+        var someList = [10, 15, 19, 99, 36, 4]
+        someList.some(function (value, index) {
+            console.log("item",value); //输出 10  15  19  99  因为99>19
+            return value > 19
+        })
+        console.log('===============javascript的reduce用法===========')
+
+        var reduceArray=[
+             1,
+             2,
+             3,
+             4,
+             5
+        ];
+        var reduceRes=reduceArray.reduce(function(prev,cur,index,array){
+            return prev+cur
+        })
+        console.log(reduceRes)
+        //reduce练习题 可以计算1+2+3+..+99
+        var forReduceArray=[]
+        for(let i=0;i<100;i++){
+            forReduceArray.push(i)
+        }
+        var forReduceRes=forReduceArray.reduce(function(prev,cur,index,array){
+             return prev+cur;
+        })
+        console.log('forReduceRes结果',forReduceRes)
+        
+    </script>
+</body>
+
+</html>
