@@ -909,3 +909,95 @@ URL地址处理编码解码方法：
 
 解码：decodeURI()和 decodeURIComponent()
 
+##### 第六章 js面向对象程序设计
+
+##### 6.1 理解对象
+
+```javascript
+var person=new Object(); //创建对象
+person.name="Nicholas" ;
+person.age=29 ;
+//这个是函数表达式了 
+person.sayName=function(){
+	console.log(this.name);
+}
+
+//字面量方式创建对象
+var person={
+    name:'Nicholas',
+    age:29,
+    job:'Software Enginner',
+    sayName:function(){
+        console.log(this.name)
+    }
+}
+```
+
+##### 2.访问器属性：
+
+访问器属性不包含数据值；它们包含一对儿 getter 和 setter 函数（不过，这两个函数都不是必需的）。 
+
+在读取访问器属性时，会调用 getter 函数，这个函数负责返回有效的值；在写入访问器属性时，会调用 
+
+setter 函数并传入新值，这个函数负责决定如何处理数据。访问器属性有如下 4 个特性。 
+
+ [[Configurable]]：表示能否通过 delete 删除属性从而重新定义属性，能否修改属性的特 
+
+性，或者能否把属性修改为数据属性。对于直接在对象上定义的属性，这个特性的默认值为 
+
+true。 
+
+ [[Enumerable]]：表示能否通过 for-in 循环返回属性。对于直接在对象上定义的属性，这 
+
+个特性的默认值为 true。 
+
+ [[Get]]：在读取属性时调用的函数。默认值为 undefined。 
+
+ [[Set]]：在写入属性时调用的函数。默认值为 undefined。 
+
+```javascript
+ var person={
+             name:'zhangsan',
+             sayName:function(){ 
+                 console.log('说名字')
+             }
+        }
+       
+        //delete person.name
+        console.log('sayName',person.name)
+        //这个函数接收3个参数  
+        Object.defineProperty(person,'name',{
+            writable:false, //能否修改属性值  默认返回为true 表示可以修改 这里设置为false表示对象不能被修改
+            value:'lisi'  //这个value是表示你要修改的值，
+        }) ;//这个方法接收3个参数
+        //defineProperty这个函数 接收3个参数 第一个参数为 要修改的对象，第二个参数为要修改的对象的属性 
+        //第三个参数 是描述对象 ，用来描述对象的属性， 这个描述对象的属性 必须是  configurable,enumerable,wretable,value.
+        console.log(person)
+        person.name="wangwu"
+        console.log(person)
+        for(let item in person){
+            console.log('item',item)
+        }
+	
+		
+		//set跟get的用法
+ 		var book = {
+            _year: 2004,
+            edition: 1
+        };
+        Object.defineProperty(book, "year", {
+            get: function () {
+                return this._year;
+            },
+            set: function (newValue) {
+                if (newValue > 2004) {
+                    this._year = newValue;
+                    this.edition += newValue - 2004;
+                }
+            }
+        });
+        book.year = 2005;
+        console.log(book.edition); //2
+
+```
+
