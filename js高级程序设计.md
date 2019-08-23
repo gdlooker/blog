@@ -1144,6 +1144,9 @@ value: Person
 ##### 原始的动态性
 
 ```javascript
+function Person(){
+    
+}
 var friend=new Person();
 //这个是给原型增加属性。 其实就相当于Java的类 声明方法
 Person.prototype.sayHi=function(){
@@ -1163,3 +1166,17 @@ friend.sayHi();//这里调用就会报错
 
 ##### 重写原型对象之后
 
+##### 原生对象的原型：
+
+原生引用类型：Object,Array,String,等等都在其构造函数的原型上定义了方法。
+
+```javascript
+console.log(typeof Array.prototype.sort); //function
+console.log(typeof String.prototype.substring)  //function
+```
+
+###### 原型对象的问题
+
+1.它省略了为构造函数传递初始化参数的环节，结果所有实例在默认情况下都将取得相同的属性值。
+
+最大的问题是由其共享的本性所导致的。
