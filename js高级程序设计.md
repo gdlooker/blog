@@ -1001,3 +1001,165 @@ true。
 
 ```
 
+##### 6.2创建对象
+
+###### 6.2.1 工厂模式
+
+工厂模式示例代码：
+
+```javascript
+ var o = new Object(); 
+ o.name = name; 
+ o.age = age; 
+ o.job = job; 
+ o.sayName = function(){ 
+ alert(this.name); 
+ }; 
+ return o; 
+} 
+var person1 = createPerson("Nicholas", 29, "Software Engineer"); 
+var person2 = createPerson("Greg", 27, "Doctor");
+```
+
+**缺点:工厂模式虽然解决了创建 多个相似对象的问题，但却没有解决对象识别的问题（即怎样知道一个对象的类型）**
+
+###### 6.2.2构造函数模式
+
+```javascript
+  function Person(name, age, job) {
+            this.name = name;
+            this.age = age;
+            this.job = job;
+            this.sayName =sayName
+        }
+		//说名字
+        function sayName(){
+            console.log(this.name);
+        }
+        var person1 = new Person("Nicholas", 29, "Software Engineer");
+        var person2 = new Person("Greg", 27, "Doctor");
+        person1.sayName();
+        person2.sayName();
+```
+
+**构造函数模式跟工厂模式的区别：**
+
+1.没有显式地创建对象。
+
+2.直接将属性和方法赋给了 this 对象。
+
+3.没有 return 语句
+
+**构造函数的创建会经历4个步骤：**
+
+(1) 创建一个新对象； 
+
+(2) 将构造函数的作用域赋给新对象（因此 this 就指向了这个新对象）； 
+
+(3) 执行构造函数中的代码（为这个新对象添加属性）； 
+
+(4) 返回新对象。
+
+###### 6.3.1原型模式
+
+我们知道每个函数都有一个prototype(属性),这个是属性是一个指针，指向一个对象。
+
+我们可以通过代码证明：
+
+```javascript
+//声明一个test函数
+function test(){
+     
+}
+//输出函数的prototype
+console.log(test.prototype) //可以发现输出一个对象 也就是prototype指向的这个对象
+// 必须包含有2个属性 constructor属性 是一个函数 也就是函数本身 test，另一个属性__prototype__ 
+
+//声明一个Person函数
+function Person(){
+    
+}
+var p1=new Person();
+console.log(p1); //输出p1
+//当用new关键字创建对象的时候，会给对象一个__prototype__属性指向原型对象
+{
+    __prototype__:{
+        constuctor:f,
+            __prototype:{ //这个对象是Object对象
+                   constructor:f ,   //f是Object本身
+                   xxxx:xxx,
+                   yyyy：yyy, 
+            }    
+    }
+}
+
+```
+
+
+
+遍历对象操作可以用in操作符，可以用hasOwnProperty方法和in操作符就可以确定该属性到底是存在于对象中还是存在于原型中。示例代码如下：
+
+```javascript
+function hasPrototypeProperty(object,name){
+     //如果name不属于原型Object 并且name是传进来的对象的属性 那该对象就存在于对象中
+    return !Object.hasOwnProperty(name)&&(name in object);
+}
+```
+
+更简单的原型语法
+
+```javascript
+function Person(){
+    
+}
+Person.prototype={
+    name:'Nicholas',
+    age:23,
+    job:'Software',
+    sayName:function(){
+        console.log(this.name);
+    }
+}
+```
+
+示例代码：
+
+```javascript
+var friend=new Person();
+console.log(friend instanceof Object);  //true
+console.log(friend instanceof Person);   //true
+console.log(friend.constructor==Person) ;// false
+console.log(friend.constructor==Object) ;  // true
+```
+
+//重设构造函数，只适用于es5兼容的浏览器
+
+```javascript
+Object.defineProperty(Person.prototype, "constructor", { 
+enumerable: false, 
+value: Person 
+});
+```
+
+##### 原始的动态性
+
+```javascript
+var friend=new Person();
+//这个是给原型增加属性。 其实就相当于Java的类 声明方法
+Person.prototype.sayHi=function(){
+	console.log("hi")
+ }
+friend.sayHi();//hi 
+//但是如果像下面这样写
+Person.prototype={
+    constructor:Person,
+    sayHi=function(){
+        
+    }
+};
+friend.sayHi();//这里调用就会报错 
+//报错的原因是什么？ 因为这里重写了Person的原型 导致的
+```
+
+##### 重写原型对象之后
+

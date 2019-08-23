@@ -10,18 +10,26 @@
 
 <body>
     <script type="text/javascript">
+
+        function test(){
+
+        }
+        console.log(test.prototype)
         //声明一个Person函数
         function Person() {
             //最好不要在这里 定义函数   这里会浪费内存 
         }
+      
         Person.prototype.name = "张三";
         Person.prototype.age = 22;
         Person.sayName=function(){
             console.log("说名字"+this.name)
         }
+       
         var p=new Person()
         console.log(p.__proto__==Person.prototype)
         console.log(Person.prototype)
+        console.log(p)
         function Student(){
 
         }
@@ -31,6 +39,12 @@
         var s=new Student()
         console.log(s)
         console.log(s.name)
+        console.log('===============测试原型==================');
+     
+       var res=Person.prototype.isPrototypeOf(s)
+       console.log(res)
+      console.log('========================js原型模式==============================');
+      
     </script>
 </body>
 
