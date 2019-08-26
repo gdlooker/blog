@@ -4,7 +4,7 @@
 
 使用原型继承形成原型链，就是让自己的prototype=new Super() 指向父类构造器，因为每次创建一个对象就会有一个\___prototype\___指向原型对象,形成原型链。
 
-**二** 借用构造函数来实现继承:
+**二 借用构造函数来实现继承:**
 
 ```javascript
 function SupterType(){
@@ -51,7 +51,7 @@ function object(){
      F.prototype = o; 
      return new F();
 }
-复制。来看下面的例子。
+
 var person = { 
  name: "Nicholas", 
  friends: ["Shelby", "Court", "Van"] 
@@ -113,4 +113,3 @@ function SubType(){
 ```
 
 以上就是对js继承的总结。
-
