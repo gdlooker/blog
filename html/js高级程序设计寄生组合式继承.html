@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>js寄生组合式继承</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+        //第一步  声明一个object函数用来专门创建对象实例
+        function object(original) {
+
+            //声明一个子类实例 让它继承 我要传递进来的这个对象
+            function F() {
+            }
+            //在js中让一个子类去继承父类  __prototype__->object.prototype->object.protype.__prototype__->...依次类推这就是js的继承思想 也就是所谓的原型链 
+            //这里直接继承父实例的对象  也有可能是继承父实例的原型对象
+            F.prototype = original; //指向父类对象的实例
+
+            //返回这个对象实例 === 
+            return new F(); //在js中也是要通过new关键字来创建实例
+        }
+
+        //总结也就是这个方法作了这么几件事
+
+      
+        //声明父类
+        function SuperType(name, age) {
+            //name  colors  2个字段
+            console.log('我是2个参数的构造方法');
+            this.name = name;
+            this.age = age;
+            this.colors = ['red', 'blue', 'green']; //其实就相当于Java 在父类构造函数中通过protected 声明字段
+        }
+
+        // function SubType(name,age){
+        //      console.log('我是2个参数带age字段的构造方法')
+        //      this.name=name;
+        //      this.age=age;
+        // }
+      
+
+        //声明原型 方法  也就是相当于在基类 原型上直接添加function
+        SuperType.prototype.sayName = function () {
+            //说明
+            console.log('我是父类方法说名称：', this.name);//这个this指的是 谁调用了我 我就指向谁 跟java一样
+        }
+        //声明子类
+        function SubType(name, age) {
+            // 当子类构造函数调用的时候 是不是首先要调用父类的 构造器 所以这里通过 call方法改变this的指向来实现子类调用父类方法
+            SuperType.call(this, name, age)
+        }
+        SubType.prototype.sayAge = function () {
+            console.log(this.age)
+        }
+        // initHeritPrototype方法
+        function initHeritPrototype(SubType, SuperType) {
+            var prototype = object(SuperType.prototype); //传递的是父实例的原型对象
+            //prototype.constructor=SubType  //设置子实例的constructor
+            //让子类原型 指向 一个
+            SubType.prototype = prototype
+        }
+        initHeritPrototype(SubType, SuperType)
+        //逻辑思想 这里其实就是一句话：   先让F的原型指向SuperType.prototype然后再让SubType.prototype指向F.prototype
+        var subType = new SubType('张三')
+        
+    </script>
+</body>
+
+</html>

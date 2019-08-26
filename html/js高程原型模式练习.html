@@ -22,6 +22,15 @@
         }
         friend.__proto__.sayName()
 
+        function Teacher(){}
+        function Student(){
+
+        }
+        Teacher.prototype=new Person()
+        console.log(new Teacher())
+        Student.prototype=Person.prototype
+        console.log(new Student())
+        
     </script>
 </body>
 

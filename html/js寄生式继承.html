@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>js高级程序设计寄生式继承</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+        
+        /**
+         使用Java方式实现js的寄生继承思想
+         https://github.com/gdchent/JavaSe/tree/master/src/extendsDemo/js
+         */
+        function object(obj) {
+            //用来创建对象
+            function F() { }
+            //让F类 的原型指向你要用的对象 可以是对象或者是原型对象
+            F.prototype = obj;
+            return new F();//创建对象
+        }
+        //第一寄生方式 跟工厂模式一样
+        function createObject(original) {
+            var clone = object(); //调用object工厂方法创建实例
+            clone.sayName=function(){
+                 console.log('我是sayName')
+            }
+            return clone ;
+        }
+        //很明显这种方式不好  为什么不好呢？ 因为每次创建的时候 都要声明一个方法sayNname=function(){}
+        var person={
+            name:'defaultName',
+        }
+        //这个createObject方法作了什么逻辑事情呢？就是让自己每次创建的原型对象指向Person从而实现继承
+        var resObj1=createObject(person)
+        var resObj2=createObject(person)
+
+        //逻辑步骤
+        //创建一个工厂方法用来专门创建对象
+        
+        //创建一个方法 用来专门接收创建的结果
+
+        //返回这个对象 
+    </script>
+</body>
+
+</html>
