@@ -11,9 +11,7 @@
             
             //声明一个object函数工厂 用来专门创建对象
             function object(o){
-                function F(){
-
-                }
+                function F(){}
                 F.prototype=o; //指向你要传递进来的对象
                 return new F();
             }
@@ -32,6 +30,9 @@
             obj2.name='obj2_name';
             var obj3=object(person);
             obj3.name="obj3_name"
+
+            //总结原型式继承 就是让子类的prototype（原型对象）指向父类对象 形成原型链
+            // 生成了一个临时性的新实例
     </script>
 </body>
 </html>
