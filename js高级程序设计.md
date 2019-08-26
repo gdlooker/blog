@@ -1180,3 +1180,168 @@ console.log(typeof String.prototype.substring)  //function
 1.它省略了为构造函数传递初始化参数的环节，结果所有实例在默认情况下都将取得相同的属性值。
 
 最大的问题是由其共享的本性所导致的。
+
+### 6.3 js继承
+
+##### js组合继承方式
+
+实例代码:
+
+```javascript
+//第一步 先写一个父类
+function SuperType(name){
+    this.name=name;
+    this.colors=[
+        'red',
+        'blue',
+        'green',
+    ]
+}
+//其实就是给父类写一个原型方法 就相当于在Java的父类里面增加一个方法而已
+SuperType.prototype.sayName=function(){
+    console.log(this.name);
+}
+
+//再写一个类 相当于java的 class SubType{}
+function SubType(name,age){
+    SupterType.call(this,name) ; //其实就是在子类的构造器里面调用 super方法 相当于Java这个意思
+    this.age=age;
+}
+
+//继承 父类的 方法  就是让子类的 原型有父类的方法，这样的话如果自己有重写这个方法就不会去父类里面调用该方法
+SubType.prototype=new SuperType() ;// 在js中当new SuperType()的时候 它会在它的内部自然拥有一个__prototype__的属性指向自己的原型 从而形成原型链 
+//SubType.prototype.constructor 
+SubType.prototype.constructor=SubType; //指向SubType自己 
+SubType.prototype.sayAge=function(){
+    console.log(this.age);
+}
+//
+var instance1=new SubType('Nicholas',29);
+instance1.colors.push('添加方法');// 给子类实例添加
+
+```
+
+总结：这种思想跟Java的oop思想很像，很好理解。
+
+
+##### 6.3.1原型式继承
+
+直接上示例代码：
+
+```javascript
+function object(obj){
+     function F(){}
+     F.prototype=o;
+     return new F();
+}
+
+var person={
+    name:'Nicholas',
+    friends:[
+        'Shelby',
+        'Court',
+        'Van',
+    ]
+}
+var anotherPerson=object(); //注意 这里不是new object哦，如果new了每次创建的时候会多创建一个对象
+//根据之前学过的知识 参数obj复制了一个obj的指针值 也就是进行指针的复制 是浅拷贝
+var anotherPerson = object(person); 
+anotherPerson.name = "Greg"; 
+anotherPerson.friends.push("Rob"); 
+var yetAnotherPerson = object(person); 
+yetAnotherPerson.name = "Linda"; 
+yetAnotherPerson.friends.push("Barbie");
+console.log(person.friends)  //"Shelby,Court,Van,Rob,Barbie"
+
+
+```
+
+以上代码与Object.create()创建的对象跟上面的对象很像。
+
+看下Object.create方法示例代码：
+
+```javascript
+var person = { 
+name: "Nicholas", 
+friends: ["Shelby", "Court", "Van"] 
+}; 
+var anotherPerson = Object.create(person); 
+anotherPerson.name = "Greg"; 
+anotherPerson.friends.push("Rob"); 
+var yetAnotherPerson = Object.create(person); 
+yetAnotherPerson.name = "Linda"; 
+yetAnotherPerson.friends.push("Barbie"); 
+console.log(person.friends); //"Shelby,Court,Van,Rob,Barbie"
+```
+
+Object.create()方法的第二个参数与Object.defineProperties()方法的第二个参数格式相 同：每个属性都是通过自己的描述符定义的.
+
+示例代码如下：
+
+```javascript
+var anotherPerson = Object.create(person, { 
+name: { 
+value: "Greg" 
+} 
+});
+```
+
+##### 6.3.5寄生式继承
+
+```javascript
+//工厂方法创建对象
+function object(obj){
+     function F(){}
+     F.prototype=o;
+     return new F();
+}
+//传递对象方式创建对象
+function createAnother(original){ 
+ var clone = object(original); //通过调用函数创建一个新对象
+ clone.sayHi = function(){ //以某种方式来增强这个对象
+ console.log("hi"); 
+ }; 
+ return clone; //返回这个对象
+}
+//在这个例子中，createAnother()函数接收了一个参数，也就是将要作为新对象基础的对象。然
+//后，把这个对象（original）传递给 object()函数，将返回的结果赋值给 clone。再为 clone 对象
+//添加一个新方法 sayHi()，最后返回 clone 对象
+```
+
+###### 总结：使用寄生式继承来为对象添加函数，会由于不能做到函数复用而降低效率；这一 点与构造函数模式类似。
+
+##### 6.3.6寄生组合式继承
+
+示例代码如下：
+
+```javascript
+//父类
+function SuperType(name){
+ this.name = name; 
+ this.colors = ["red", "blue", "green"]; 
+} 
+SuperType.prototype.sayName = function(){ 
+ alert(this.name); 
+};
+//子类
+function SubType(name, age){ 
+ SuperType.call(this, name); //在子类的构造器方法中调用父类方法
+ this.age = age; 
+}
+SubType.prototype.sayAge = function(){ 
+ alert(this.age); 
+};
+function inheritPrototype(subType, superType){ 
+ var prototype = object(superType.prototype); //创建对象
+ prototype.constructor = subType; //增强对象
+ subType.prototype = prototype; //指定对象
+}
+//这个示例中的 inheritPrototype()函数实现了寄生组合式继承的最简单形式。这个函数接收两
+//个参数：子类型构造函数和超类型构造函数。在函数内部，第一步是创建超类型原型的一个副本。第二
+//步是为创建的副本添加 constructor 属性，从而弥补因重写原型而失去的默认的 constructor 属性。
+//最后一步，将新创建的对象（即副本）赋值给子类型的原型。这样，我们就可以用调用 inheritPrototype()函数/的语句，去替换前面例子中为子类型原型赋值的语句了
+
+```
+
+
+
