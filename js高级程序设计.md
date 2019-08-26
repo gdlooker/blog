@@ -1345,3 +1345,64 @@ function inheritPrototype(subType, superType){
 
 
 
+### 第七章 函数表达式
+
+函数表达式示例代码：
+
+```javascript
+sayHi(); //调用函数
+function sayHi(){ //声明函数
+ alert("Hi!"); 
+}
+//在js中函数声明会被提升
+```
+
+函数表达式示例代码：
+
+```javascript
+sayHi(); //错误：函数还不存在
+var sayHi = function(){ 
+ alert("Hi!"); 
+};
+//函数表达式不能提升 因为右边是进行的rhs查询
+```
+
+##### 7.1 递归
+
+递归求阶乘示例代码：
+
+```javascript
+function factorial(num){ 
+ if (num <= 1){ 
+ return 1; 
+ } else { 
+ return num * factorial(num-1); 
+ } 
+}
+//以上代码没问题，但下面的代码却可能导致它出错
+var anotherFactorial = factorial; 
+factorial = null; 
+console.log(anotherFactorial(4)); //出错！ ,因为递归里面还有factorial函数调用所以会报错
+//可以用arguments.callee(num-1) 来替换
+```
+
+...省略  见不知道的js上卷笔记 
+
+  ##### 7.4.2 模块模式
+
+注意：js是以对象字面量方式来创建单例对象。
+
+示例代码：
+
+```javascript
+var singleton={
+    name:'value',
+    method:function(){
+         //这里是方法的代码
+    }
+}
+
+```
+
+
+
