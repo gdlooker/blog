@@ -1392,6 +1392,34 @@ console.log(anotherFactorial(4)); //出错！ ,因为递归里面还有factorial
 
 注意：js是以对象字面量方式来创建单例对象。
 
+单例就是只有一个对象.
+
+我们来看下Java的单例模式示例代码:
+
+```java
+public class RetrofitClient{
+    private RetrofitClient retrofitClient
+    public static RetrofitClient getInstance(){
+        if(retrofitClient==null){
+            retrofitClient ==new RetrofitClient();
+        }
+        return retrofitClient;
+    }
+    //调用其它方式来创建对象
+    public void createApiService(){
+        //逻辑代码
+    }
+}
+//外部调调调用
+class RetrofitTest{
+    public static void main(String ...args){
+        RetrofitClient.getInstance().createApiService();//
+    }
+}
+```
+
+以上是Java中单例模式一般的应用场景
+
 示例代码：
 
 ```javascript
@@ -1404,5 +1432,195 @@ var singleton={
 
 ```
 
+下面是使用模块方式创建对象方式:(就是把所有的属性或者方法全部丢在一个对象里)
 
+```javascript
+var singleton=function(){
+     //添加私有变量
+    var privateVariable=10;
+    function privateFunction(){
+        return false;
+    }
+    return {
+        publicProperty: true,
+        publicMethod : function(){ 
+        privateVariable++; //内部函数引用外部函数变量 这里形成了闭包
+        return privateFunction(); 
+       }
+    }
+}
+//window全局执行环境调用
+singleton().publicProperty //true  
+```
+
+总结:以字面量方式创建单例对象时，这个单例对象是暴露给外部可以直接通过字面量对象直接调用，
+
+而使用函数方式封装的模块模式 返回一个对象暴露给外部使用，这样就封装了内部的私有属性跟方法不能直接被外部使用，其实也就是通过js的闭包方式来间接的调用. 
+
+模块模式应用场景：如果必须创建一个对象并以某些数据对其进行初始化，同时还要公开一些能够访问这些私有 数据的方法，那么就可以使用模块模式.以这种方式来创建的对象是单例的，其实就是间接的暴露一个
+
+通过字面量创建单例，由它来访问私有属性跟方法。
+
+##### 7.4.3 增强的模块模式
+
+```javascript
+var singleton=function(){
+     var privateVariable=10 ;//私有变量和私有函数
+     function privateFunction(){
+          return false;
+     }
+    
+     //创建私有对象
+    var object=new Customtype();
+     //添加特权/公有属性和方法
+    object.publicProperty = true; 
+    object.publicMethod = function(){ 
+    privateVariable++; 
+    return privateFunction(); 
+ }; 
+ //返回这个对象
+ return object;
+}
+```
+
+### 第八章 BOM
+
+什么是BOM？ brower object model  浏览器对象模型。
+
+##### 8.1 window对象
+
+BOM的核心对象是window，它是用来表示浏览器的一个实例。在浏览器中。window既是一个浏览器窗口，同时也是ecmascript规定的global.
+
+总结：浏览器窗口（window）作为global对象，网页中任何一个变量 对象 属性 方法都是在window中的，
+
+所以可以访问parseInt方法
+
+js=bom+dom+ecmascript 第一章讲过了。
+
+window添加的属性 不可以 通过delete操作符被直接删除，因为它自带的 [[Configurable]]属性被设置为false。
+
+##### 8.1.2 窗口关系以及框架
+
+在之前有讲过。如果我们集成了第三方框架，因为每一个框架页面都有自己的全局执行环境的问题。
+
+而在js中为每一个window对象提供了一个f'rames 属性(数组)来访问其它的框架的window，这样我们就可以通过window.frames的索引去获取到它，会根据页面的引入的从上往下的顺序依次获取子window对象.
+
+示例代码入下：(比如frameset标签的嵌套问题)
+
+```html
+<html>
+    <head>
+        
+    </head>
+    <body>
+         <frameset rows ="100,*">
+              
+          <framesrc="frame.htm"name="topFrame">
+          <frameset cols="50%,50%">
+          <framesrc="anotherframe.htm"name="leftFrame">
+          <framesrc="anotherframeset.htm"name="rightFrame"></frameset>
+        </frameset>
+    </body>
+</html>
+```
+
+##### 8.1.3窗口的位置
+
+ //因为浏览器方式 IE Safari 
+
+​        //opera浏览器虽然支持 sceeenLeft跟screenTop的 
+
+​        //window窗口距离 总之一句话就是  由于浏览器之间有差异性
+
+​        //获取 window的窗口距离 要使用三元运算符来
+
+​        //这2个属性表示从屏幕的左边到 弹出显示窗口的距离 以及屏幕的上面到窗口顶部的距离
+
+ 示例代码：
+
+```javascript
+  var leftPos=typeof window.screenLeft =='number' ?window.screenLeft:window.screenX ;
+  var topPos=typeof window.screenTop=='number' ? window.screenTop:window.screenY;
+```
+
+
+
+   #####   8.1.4 窗口的大小
+
+针对window对象而言的
+
+innerWidth:窗口本身的宽度
+
+innerHeight:窗口本身的高度
+
+outerWidth 和 outerHeight 返回浏览器窗口本身的尺寸
+示例代码：
+
+```javascr
+//第一
+ console.log('xxx',window.innerWidth) ;//我这个显示器 输出1920
+ console.log('xxx',window.outerHeight) ;// 浏览器窗口本身尺寸
+ 
+ //设置窗口大小
+ //使用 resizeTo()和 resizeBy()方法可以调整浏览器窗口的大小
+ window.resizeTo(100, 100); //将窗口调整到100*100
+ console.log('xxx',window.innerWidth) ;//输出还是1920
+ console.log('xxx',window.outerWidth) ;// 输出100
+```
+
+##### 8.1.5 导航和窗口
+
+window.open()方法用于导航到特定的url地址，也可以打开一个新的窗口，
+
+```javascript
+window.open(
+   'https://www.baidu.com',
+    窗口目标, //比如frameset 的name='topFrame'
+    '特性字符串',
+    boolean, //表示是否取代当前页面
+)
+//上面等同于
+<a href="https://www.baidu.com" target='topFrame'>百度</a>
+```
+
+##### 8.2 location对象
+
+##### 8.3检测插件
+
+浏览器是否安装了哪些插件?
+
+```javascript
+//检测插件（在 IE 中无效）
+function hasPlugin(name){ 
+ name = name.toLowerCase(); 
+ for (var i=0; i < navigator.plugins.length; i++){ 
+ if (navigator. plugins [i].name.toLowerCase().indexOf(name) > -1){ 
+      return true; 
+   } 
+ } 
+ return false; 
+}
+//检测Flash
+console.log(hasPlugin('Flash'))
+//检测 QuickTime
+console.log(hasPlugin('QuickTime'))
+```
+
+##### 8.4  screen对象  
+
+##### 8.5 history对象
+
+//后退上一页
+
+window.history.go(-1)
+
+//前进一页
+
+window.history.go(1)
+
+//前进二页
+
+window.history.go(2);
+
+另外，还可以使用两个简写方法back()和forward()来代替go()。前进跟后退
 
