@@ -9,7 +9,7 @@
 <body>
         <script type="text/javascript"> 
 
-              test() ;
+              //test() ;
             //   var test=function(){
             //        console.log('我是test函数表达式')
             //   }
@@ -20,7 +20,13 @@
                  console.log('我是函数声明')
             }
             //所以为什么在js中 函数可以先调用 是因为函数声明提升
-        
+            console.log(test)
+
+            var a=3 ;
+            function a(){
+                console.log('函数a')
+            }
+            console.log(a)
         </script>
 </body>
 </html>
