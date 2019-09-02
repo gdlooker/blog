@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>js高程修改对象的属性</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+        //修改多个对象的属性
+        console.log('====================修改多个对象的属性====================')
+        var book = {
+            name1: 'java',
+            name2: 'Android',
+            name3: 'javascript'
+        }
+        Object.defineProperties(book, {
+            'name1': {
+                value: 'java_after',
+                writable: true,
+            },
+            'name2': {
+                value: 'Android_after',
+                writable: true,
+            },
+            'name3': {
+                value: 'javascript_after',
+                writable: true,
+            }
+        })
+        console.log(book.valueOf())
+        console.log('====================修改单个对象的属性======================')
+        var book2 = {
+            name: 'java',
+            name2:'android',
+        }
+        //mdn文档这里不友好  文档写的默认属性不对。
+        Object.defineProperty(book2, 'name', {
+            //enumerable: true, //表示能否通过 for-in 循环返回属性  。
+            configurable: true, //默认为true  表示是否可以删除对象的属性  true可以被删除  false 不能被删除
+            writable: false,  //是否可以
+            value: "static",//要修改的属性的值
+        })
+        console.log('book2', book2)
+        // delete book2.name
+        // console.log(book2.name)
+        for(let item in book2){
+            console.log('item',item)
+        }
+        
+    </script>
+</body>
+
+</html>

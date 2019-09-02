@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script type="text/javascript">
+        var person = {
+            name: 'zhangsan',
+            sayName: function () {
+                console.log('说名字')
+            }
+        }
+
+        //delete person.name
+        console.log('sayName', person.name)
+        //这个函数接收3个参数  
+        Object.defineProperty(person, 'name', {
+            writable: false, //能否修改属性值  默认返回为true 表示可以修改 这里设置为false表示对象不能被修改
+            value: 'lisi'  //这个value是表示你要修改的值，
+        });//这个方法接收3个参数
+        //defineProperty这个函数 接收3个参数 第一个参数为 要修改的对象，第二个参数为要修改的对象的属性 
+        //第三个参数 是描述对象 ，用来描述对象的属性， 这个描述对象的属性 必须是  configurable,enumerable,wretable,value.
+        console.log(person)
+        person.name = "wangwu"
+        console.log(person)
+        for (let item in person) {
+            console.log('item', item)
+        }
+
+        var book = {
+            _year: 2004,
+            edition: 1
+        };
+        Object.defineProperty(book, "year", {
+            get: function () {
+                return this._year;
+            },
+            set: function (newValue) {
+                if (newValue > 2004) {
+                    this._year = newValue;
+                    this.edition += newValue - 2004;
+                }
+            }
+        });
+        book.year = 2005;
+        console.log(book.edition); //2
+        console.log('=========js面向对象=========')
+        function Person(name, age, job) {
+            this.name = name;
+            this.age = age;
+            this.job = job;
+            this.sayName =sayName
+        }
+
+        function sayName(){
+            console.log(this.name);
+        }
+        var person1 = new Person("Nicholas", 29, "Software Engineer");
+        var person2 = new Person("Greg", 27, "Doctor");
+        person1.sayName();
+        person2.sayName();
+      
+
+      
+    </script>
+</body>
+
+</html>

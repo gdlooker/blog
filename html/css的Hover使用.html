@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>hover样式使用</title>
+    <style type="text/css">
+        /* 表示当鼠标移动在元素的时候的样式 */
+        a:hover {
+            background-color: yellow;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            padding: 12px 16px;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="http://www.w3school.com.cn">W3Sschool</a>
+    <a href="http://www.google.com">Google</a>
+    <a href="http://www.wikipedia.org">Wikipedia</a>
+    <p><b>注释：</b>:hover 选择器鼠标指针在其上浮动的链接设置样式。</p>
+
+
+    <h2>鼠标经过下拉显示</h2>
+    <p>移动鼠标到下面的文字，打开下拉菜单的内容.</p>
+
+    <div class="dropdown">
+        <span>鼠标经过我</span>
+        <div class="dropdown-content">
+            <p>Hello World!</p>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

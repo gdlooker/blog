@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>javascript组合式继承</title>
+</head>
+<body>
+      <script type="text/javascript">
+
+            //声明2个类 类似于Java
+            function SuperType(name,age){
+                console.log('父类构造器方式被调用')
+                this.name=name;
+                this.age=age;
+            }
+            function SubType(name,age){
+                 //在创建自己子类之前先调用父类
+                 SuperType.call(this,name,age)
+                 console.log('子类构造方式被调用')
+                this.name=name;
+                this.age=age;
+            }
+
+            SubType.prototype=new SuperType()
+            //创建子类实例
+            var subType=new SubType("子类name",23); // 输出  父类构造器会被调用2次  
+            
+      </script>
+</body>
+</html>

@@ -909,3 +909,718 @@ URL地址处理编码解码方法：
 
 解码：decodeURI()和 decodeURIComponent()
 
+##### 第六章 js面向对象程序设计
+
+##### 6.1 理解对象
+
+```javascript
+var person=new Object(); //创建对象
+person.name="Nicholas" ;
+person.age=29 ;
+//这个是函数表达式了 
+person.sayName=function(){
+	console.log(this.name);
+}
+
+//字面量方式创建对象
+var person={
+    name:'Nicholas',
+    age:29,
+    job:'Software Enginner',
+    sayName:function(){
+        console.log(this.name)
+    }
+}
+```
+
+##### 2.访问器属性：
+
+访问器属性不包含数据值；它们包含一对儿 getter 和 setter 函数（不过，这两个函数都不是必需的）。 
+
+在读取访问器属性时，会调用 getter 函数，这个函数负责返回有效的值；在写入访问器属性时，会调用 
+
+setter 函数并传入新值，这个函数负责决定如何处理数据。访问器属性有如下 4 个特性。 
+
+ [[Configurable]]：表示能否通过 delete 删除属性从而重新定义属性，能否修改属性的特 
+
+性，或者能否把属性修改为数据属性。对于直接在对象上定义的属性，这个特性的默认值为 
+
+true。 
+
+ [[Enumerable]]：表示能否通过 for-in 循环返回属性。对于直接在对象上定义的属性，这 
+
+个特性的默认值为 true。 
+
+ [[Get]]：在读取属性时调用的函数。默认值为 undefined。 
+
+ [[Set]]：在写入属性时调用的函数。默认值为 undefined。 
+
+```javascript
+ var person={
+             name:'zhangsan',
+             sayName:function(){ 
+                 console.log('说名字')
+             }
+        }
+       
+        //delete person.name
+        console.log('sayName',person.name)
+        //这个函数接收3个参数  
+        Object.defineProperty(person,'name',{
+            writable:false, //能否修改属性值  默认返回为true 表示可以修改 这里设置为false表示对象不能被修改
+            value:'lisi'  //这个value是表示你要修改的值，
+        }) ;//这个方法接收3个参数
+        //defineProperty这个函数 接收3个参数 第一个参数为 要修改的对象，第二个参数为要修改的对象的属性 
+        //第三个参数 是描述对象 ，用来描述对象的属性， 这个描述对象的属性 必须是  configurable,enumerable,wretable,value.
+        console.log(person)
+        person.name="wangwu"
+        console.log(person)
+        for(let item in person){
+            console.log('item',item)
+        }
+	
+		
+		//set跟get的用法
+ 		var book = {
+            _year: 2004,
+            edition: 1
+        };
+        Object.defineProperty(book, "year", {
+            get: function () {
+                return this._year;
+            },
+            set: function (newValue) {
+                if (newValue > 2004) {
+                    this._year = newValue;
+                    this.edition += newValue - 2004;
+                }
+            }
+        });
+        book.year = 2005;
+        console.log(book.edition); //2
+
+```
+
+##### 6.2创建对象
+
+###### 6.2.1 工厂模式
+
+工厂模式示例代码：
+
+```javascript
+ var o = new Object(); 
+ o.name = name; 
+ o.age = age; 
+ o.job = job; 
+ o.sayName = function(){ 
+ alert(this.name); 
+ }; 
+ return o; 
+} 
+var person1 = createPerson("Nicholas", 29, "Software Engineer"); 
+var person2 = createPerson("Greg", 27, "Doctor");
+```
+
+**缺点:工厂模式虽然解决了创建 多个相似对象的问题，但却没有解决对象识别的问题（即怎样知道一个对象的类型）**
+
+###### 6.2.2构造函数模式
+
+```javascript
+  function Person(name, age, job) {
+            this.name = name;
+            this.age = age;
+            this.job = job;
+            this.sayName =sayName
+        }
+		//说名字
+        function sayName(){
+            console.log(this.name);
+        }
+        var person1 = new Person("Nicholas", 29, "Software Engineer");
+        var person2 = new Person("Greg", 27, "Doctor");
+        person1.sayName();
+        person2.sayName();
+```
+
+**构造函数模式跟工厂模式的区别：**
+
+1.没有显式地创建对象。
+
+2.直接将属性和方法赋给了 this 对象。
+
+3.没有 return 语句
+
+**构造函数的创建会经历4个步骤：**
+
+(1) 创建一个新对象； 
+
+(2) 将构造函数的作用域赋给新对象（因此 this 就指向了这个新对象）； 
+
+(3) 执行构造函数中的代码（为这个新对象添加属性）； 
+
+(4) 返回新对象。
+
+###### 6.3.1原型模式
+
+我们知道每个函数都有一个prototype(属性),这个是属性是一个指针，指向一个对象。
+
+我们可以通过代码证明：
+
+```javascript
+//声明一个test函数
+function test(){
+     
+}
+//输出函数的prototype
+console.log(test.prototype) //可以发现输出一个对象 也就是prototype指向的这个对象
+// 必须包含有2个属性 constructor属性 是一个函数 也就是函数本身 test，另一个属性__prototype__ 
+
+//声明一个Person函数
+function Person(){
+    
+}
+var p1=new Person();
+console.log(p1); //输出p1
+//当用new关键字创建对象的时候，会给对象一个__prototype__属性指向原型对象
+{
+    __prototype__:{
+        constuctor:f,
+            __prototype:{ //这个对象是Object对象
+                   constructor:f ,   //f是Object本身
+                   xxxx:xxx,
+                   yyyy：yyy, 
+            }    
+    }
+}
+
+```
+
+
+
+遍历对象操作可以用in操作符，可以用hasOwnProperty方法和in操作符就可以确定该属性到底是存在于对象中还是存在于原型中。示例代码如下：
+
+```javascript
+function hasPrototypeProperty(object,name){
+     //如果name不属于原型Object 并且name是传进来的对象的属性 那该对象就存在于对象中
+    return !Object.hasOwnProperty(name)&&(name in object);
+}
+```
+
+更简单的原型语法
+
+```javascript
+function Person(){
+    
+}
+Person.prototype={
+    name:'Nicholas',
+    age:23,
+    job:'Software',
+    sayName:function(){
+        console.log(this.name);
+    }
+}
+```
+
+示例代码：
+
+```javascript
+var friend=new Person();
+console.log(friend instanceof Object);  //true
+console.log(friend instanceof Person);   //true
+console.log(friend.constructor==Person) ;// false
+console.log(friend.constructor==Object) ;  // true
+```
+
+//重设构造函数，只适用于es5兼容的浏览器
+
+```javascript
+Object.defineProperty(Person.prototype, "constructor", { 
+enumerable: false, 
+value: Person 
+});
+```
+
+##### 原始的动态性
+
+```javascript
+function Person(){
+    
+}
+var friend=new Person();
+//这个是给原型增加属性。 其实就相当于Java的类 声明方法
+Person.prototype.sayHi=function(){
+	console.log("hi")
+ }
+friend.sayHi();//hi 
+//但是如果像下面这样写
+Person.prototype={
+    constructor:Person,
+    sayHi=function(){
+        
+    }
+};
+friend.sayHi();//这里调用就会报错 
+//报错的原因是什么？ 因为这里重写了Person的原型 导致的
+```
+
+##### 重写原型对象之后
+
+##### 原生对象的原型：
+
+原生引用类型：Object,Array,String,等等都在其构造函数的原型上定义了方法。
+
+```javascript
+console.log(typeof Array.prototype.sort); //function
+console.log(typeof String.prototype.substring)  //function
+```
+
+###### 原型对象的问题
+
+1.它省略了为构造函数传递初始化参数的环节，结果所有实例在默认情况下都将取得相同的属性值。
+
+最大的问题是由其共享的本性所导致的。
+
+### 6.3 js继承
+
+##### js组合继承方式
+
+实例代码:
+
+```javascript
+//第一步 先写一个父类
+function SuperType(name){
+    this.name=name;
+    this.colors=[
+        'red',
+        'blue',
+        'green',
+    ]
+}
+//其实就是给父类写一个原型方法 就相当于在Java的父类里面增加一个方法而已
+SuperType.prototype.sayName=function(){
+    console.log(this.name);
+}
+
+//再写一个类 相当于java的 class SubType{}
+function SubType(name,age){
+    SupterType.call(this,name) ; //其实就是在子类的构造器里面调用 super方法 相当于Java这个意思
+    this.age=age;
+}
+
+//继承 父类的 方法  就是让子类的 原型有父类的方法，这样的话如果自己有重写这个方法就不会去父类里面调用该方法
+SubType.prototype=new SuperType() ;// 在js中当new SuperType()的时候 它会在它的内部自然拥有一个__prototype__的属性指向自己的原型 从而形成原型链 
+//SubType.prototype.constructor 
+SubType.prototype.constructor=SubType; //指向SubType自己 
+SubType.prototype.sayAge=function(){
+    console.log(this.age);
+}
+//
+var instance1=new SubType('Nicholas',29);
+instance1.colors.push('添加方法');// 给子类实例添加
+
+```
+
+总结：这种思想跟Java的oop思想很像，很好理解。
+
+
+##### 6.3.1原型式继承
+
+直接上示例代码：
+
+```javascript
+function object(obj){
+     function F(){}
+     F.prototype=o;
+     return new F();
+}
+
+var person={
+    name:'Nicholas',
+    friends:[
+        'Shelby',
+        'Court',
+        'Van',
+    ]
+}
+var anotherPerson=object(); //注意 这里不是new object哦，如果new了每次创建的时候会多创建一个对象
+//根据之前学过的知识 参数obj复制了一个obj的指针值 也就是进行指针的复制 是浅拷贝
+var anotherPerson = object(person); 
+anotherPerson.name = "Greg"; 
+anotherPerson.friends.push("Rob"); 
+var yetAnotherPerson = object(person); 
+yetAnotherPerson.name = "Linda"; 
+yetAnotherPerson.friends.push("Barbie");
+console.log(person.friends)  //"Shelby,Court,Van,Rob,Barbie"
+
+
+```
+
+以上代码与Object.create()创建的对象跟上面的对象很像。
+
+看下Object.create方法示例代码：
+
+```javascript
+var person = { 
+name: "Nicholas", 
+friends: ["Shelby", "Court", "Van"] 
+}; 
+var anotherPerson = Object.create(person); 
+anotherPerson.name = "Greg"; 
+anotherPerson.friends.push("Rob"); 
+var yetAnotherPerson = Object.create(person); 
+yetAnotherPerson.name = "Linda"; 
+yetAnotherPerson.friends.push("Barbie"); 
+console.log(person.friends); //"Shelby,Court,Van,Rob,Barbie"
+```
+
+Object.create()方法的第二个参数与Object.defineProperties()方法的第二个参数格式相 同：每个属性都是通过自己的描述符定义的.
+
+示例代码如下：
+
+```javascript
+var anotherPerson = Object.create(person, { 
+name: { 
+value: "Greg" 
+} 
+});
+```
+
+##### 6.3.5寄生式继承
+
+```javascript
+//工厂方法创建对象
+function object(obj){
+     function F(){}
+     F.prototype=o;
+     return new F();
+}
+//传递对象方式创建对象
+function createAnother(original){ 
+ var clone = object(original); //通过调用函数创建一个新对象
+ clone.sayHi = function(){ //以某种方式来增强这个对象
+ console.log("hi"); 
+ }; 
+ return clone; //返回这个对象
+}
+//在这个例子中，createAnother()函数接收了一个参数，也就是将要作为新对象基础的对象。然
+//后，把这个对象（original）传递给 object()函数，将返回的结果赋值给 clone。再为 clone 对象
+//添加一个新方法 sayHi()，最后返回 clone 对象
+```
+
+###### 总结：使用寄生式继承来为对象添加函数，会由于不能做到函数复用而降低效率；这一 点与构造函数模式类似。
+
+##### 6.3.6寄生组合式继承
+
+示例代码如下：
+
+```javascript
+//父类
+function SuperType(name){
+ this.name = name; 
+ this.colors = ["red", "blue", "green"]; 
+} 
+SuperType.prototype.sayName = function(){ 
+ alert(this.name); 
+};
+//子类
+function SubType(name, age){ 
+ SuperType.call(this, name); //在子类的构造器方法中调用父类方法
+ this.age = age; 
+}
+SubType.prototype.sayAge = function(){ 
+ alert(this.age); 
+};
+function inheritPrototype(subType, superType){ 
+ var prototype = object(superType.prototype); //创建对象
+ prototype.constructor = subType; //增强对象
+ subType.prototype = prototype; //指定对象
+}
+//这个示例中的 inheritPrototype()函数实现了寄生组合式继承的最简单形式。这个函数接收两
+//个参数：子类型构造函数和超类型构造函数。在函数内部，第一步是创建超类型原型的一个副本。第二
+//步是为创建的副本添加 constructor 属性，从而弥补因重写原型而失去的默认的 constructor 属性。
+//最后一步，将新创建的对象（即副本）赋值给子类型的原型。这样，我们就可以用调用 inheritPrototype()函数/的语句，去替换前面例子中为子类型原型赋值的语句了
+
+```
+
+
+
+### 第七章 函数表达式
+
+函数表达式示例代码：
+
+```javascript
+sayHi(); //调用函数
+function sayHi(){ //声明函数
+ alert("Hi!"); 
+}
+//在js中函数声明会被提升
+```
+
+函数表达式示例代码：
+
+```javascript
+sayHi(); //错误：函数还不存在
+var sayHi = function(){ 
+ alert("Hi!"); 
+};
+//函数表达式不能提升 因为右边是进行的rhs查询
+```
+
+##### 7.1 递归
+
+递归求阶乘示例代码：
+
+```javascript
+function factorial(num){ 
+ if (num <= 1){ 
+ return 1; 
+ } else { 
+ return num * factorial(num-1); 
+ } 
+}
+//以上代码没问题，但下面的代码却可能导致它出错
+var anotherFactorial = factorial; 
+factorial = null; 
+console.log(anotherFactorial(4)); //出错！ ,因为递归里面还有factorial函数调用所以会报错
+//可以用arguments.callee(num-1) 来替换
+```
+
+...省略  见不知道的js上卷笔记 
+
+  ##### 7.4.2 模块模式
+
+注意：js是以对象字面量方式来创建单例对象。
+
+单例就是只有一个对象.
+
+我们来看下Java的单例模式示例代码:
+
+```java
+public class RetrofitClient{
+    private RetrofitClient retrofitClient
+    public static RetrofitClient getInstance(){
+        if(retrofitClient==null){
+            retrofitClient ==new RetrofitClient();
+        }
+        return retrofitClient;
+    }
+    //调用其它方式来创建对象
+    public void createApiService(){
+        //逻辑代码
+    }
+}
+//外部调调调用
+class RetrofitTest{
+    public static void main(String ...args){
+        RetrofitClient.getInstance().createApiService();//
+    }
+}
+```
+
+以上是Java中单例模式一般的应用场景
+
+示例代码：
+
+```javascript
+var singleton={
+    name:'value',
+    method:function(){
+         //这里是方法的代码
+    }
+}
+
+```
+
+下面是使用模块方式创建对象方式:(就是把所有的属性或者方法全部丢在一个对象里)
+
+```javascript
+var singleton=function(){
+     //添加私有变量
+    var privateVariable=10;
+    function privateFunction(){
+        return false;
+    }
+    return {
+        publicProperty: true,
+        publicMethod : function(){ 
+        privateVariable++; //内部函数引用外部函数变量 这里形成了闭包
+        return privateFunction(); 
+       }
+    }
+}
+//window全局执行环境调用
+singleton().publicProperty //true  
+```
+
+总结:以字面量方式创建单例对象时，这个单例对象是暴露给外部可以直接通过字面量对象直接调用，
+
+而使用函数方式封装的模块模式 返回一个对象暴露给外部使用，这样就封装了内部的私有属性跟方法不能直接被外部使用，其实也就是通过js的闭包方式来间接的调用. 
+
+模块模式应用场景：如果必须创建一个对象并以某些数据对其进行初始化，同时还要公开一些能够访问这些私有 数据的方法，那么就可以使用模块模式.以这种方式来创建的对象是单例的，其实就是间接的暴露一个
+
+通过字面量创建单例，由它来访问私有属性跟方法。
+
+##### 7.4.3 增强的模块模式
+
+```javascript
+var singleton=function(){
+     var privateVariable=10 ;//私有变量和私有函数
+     function privateFunction(){
+          return false;
+     }
+    
+     //创建私有对象
+    var object=new Customtype();
+     //添加特权/公有属性和方法
+    object.publicProperty = true; 
+    object.publicMethod = function(){ 
+    privateVariable++; 
+    return privateFunction(); 
+ }; 
+ //返回这个对象
+ return object;
+}
+```
+
+### 第八章 BOM
+
+什么是BOM？ brower object model  浏览器对象模型。
+
+##### 8.1 window对象
+
+BOM的核心对象是window，它是用来表示浏览器的一个实例。在浏览器中。window既是一个浏览器窗口，同时也是ecmascript规定的global.
+
+总结：浏览器窗口（window）作为global对象，网页中任何一个变量 对象 属性 方法都是在window中的，
+
+所以可以访问parseInt方法
+
+js=bom+dom+ecmascript 第一章讲过了。
+
+window添加的属性 不可以 通过delete操作符被直接删除，因为它自带的 [[Configurable]]属性被设置为false。
+
+##### 8.1.2 窗口关系以及框架
+
+在之前有讲过。如果我们集成了第三方框架，因为每一个框架页面都有自己的全局执行环境的问题。
+
+而在js中为每一个window对象提供了一个f'rames 属性(数组)来访问其它的框架的window，这样我们就可以通过window.frames的索引去获取到它，会根据页面的引入的从上往下的顺序依次获取子window对象.
+
+示例代码入下：(比如frameset标签的嵌套问题)
+
+```html
+<html>
+    <head>
+        
+    </head>
+    <body>
+         <frameset rows ="100,*">
+              
+          <framesrc="frame.htm"name="topFrame">
+          <frameset cols="50%,50%">
+          <framesrc="anotherframe.htm"name="leftFrame">
+          <framesrc="anotherframeset.htm"name="rightFrame"></frameset>
+        </frameset>
+    </body>
+</html>
+```
+
+##### 8.1.3窗口的位置
+
+ //因为浏览器方式 IE Safari 
+
+​        //opera浏览器虽然支持 sceeenLeft跟screenTop的 
+
+​        //window窗口距离 总之一句话就是  由于浏览器之间有差异性
+
+​        //获取 window的窗口距离 要使用三元运算符来
+
+​        //这2个属性表示从屏幕的左边到 弹出显示窗口的距离 以及屏幕的上面到窗口顶部的距离
+
+ 示例代码：
+
+```javascript
+  var leftPos=typeof window.screenLeft =='number' ?window.screenLeft:window.screenX ;
+  var topPos=typeof window.screenTop=='number' ? window.screenTop:window.screenY;
+```
+
+
+
+   #####   8.1.4 窗口的大小
+
+针对window对象而言的
+
+innerWidth:窗口本身的宽度
+
+innerHeight:窗口本身的高度
+
+outerWidth 和 outerHeight 返回浏览器窗口本身的尺寸
+示例代码：
+
+```javascr
+//第一
+ console.log('xxx',window.innerWidth) ;//我这个显示器 输出1920
+ console.log('xxx',window.outerHeight) ;// 浏览器窗口本身尺寸
+ 
+ //设置窗口大小
+ //使用 resizeTo()和 resizeBy()方法可以调整浏览器窗口的大小
+ window.resizeTo(100, 100); //将窗口调整到100*100
+ console.log('xxx',window.innerWidth) ;//输出还是1920
+ console.log('xxx',window.outerWidth) ;// 输出100
+```
+
+##### 8.1.5 导航和窗口
+
+window.open()方法用于导航到特定的url地址，也可以打开一个新的窗口，
+
+```javascript
+window.open(
+   'https://www.baidu.com',
+    窗口目标, //比如frameset 的name='topFrame'
+    '特性字符串',
+    boolean, //表示是否取代当前页面
+)
+//上面等同于
+<a href="https://www.baidu.com" target='topFrame'>百度</a>
+```
+
+##### 8.2 location对象
+
+##### 8.3检测插件
+
+浏览器是否安装了哪些插件?
+
+```javascript
+//检测插件（在 IE 中无效）
+function hasPlugin(name){ 
+ name = name.toLowerCase(); 
+ for (var i=0; i < navigator.plugins.length; i++){ 
+ if (navigator. plugins [i].name.toLowerCase().indexOf(name) > -1){ 
+      return true; 
+   } 
+ } 
+ return false; 
+}
+//检测Flash
+console.log(hasPlugin('Flash'))
+//检测 QuickTime
+console.log(hasPlugin('QuickTime'))
+```
+
+##### 8.4  screen对象  
+
+##### 8.5 history对象
+
+//后退上一页
+
+window.history.go(-1)
+
+//前进一页
+
+window.history.go(1)
+
+//前进二页
+
+window.history.go(2);
+
+另外，还可以使用两个简写方法back()和forward()来代替go()。前进跟后退
+

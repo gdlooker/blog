@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>js原型式继承</title>
+</head>
+<body>
+    <script type="text/javascript">
+            
+            //声明一个object函数工厂 用来专门创建对象
+            function object(o){
+                function F(){}
+                F.prototype=o; //指向你要传递进来的对象
+                return new F();
+            }
+
+            //创建一个person对象
+            var person={
+                name:'张三',
+                friends:['f1','f2','f3']
+            };
+            //创建人对象1
+            var obj1=object(person)
+            //重写属性
+            obj11.name="obj1_name";
+            //创建对象2
+            var obj2=object(person);
+            obj2.name='obj2_name';
+            var obj3=object(person);
+            obj3.name="obj3_name"
+
+            //总结原型式继承 就是让子类的prototype（原型对象）指向父类对象 形成原型链
+            // 生成了一个临时性的新实例
+    </script>
+</body>
+</html>
