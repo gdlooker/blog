@@ -156,7 +156,7 @@ Number(" ")// 返回 0
 
 String数据类型包含一些特殊的字符字面量，也叫转义序列，用于表示非打印字符，或者具有其他用途的字符。这些字符字面量如下表所示：
 
-![image](https://github.com/gdchent/web-practice/blob/master/assets/字符串字面量.png)
+![image](https://github.com/gdchent/blog/blob/master/前端/JavaScript/assets/字符串字面量.png)
 
 字符串的特点
 
