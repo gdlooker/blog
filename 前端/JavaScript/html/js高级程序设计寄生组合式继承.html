@@ -51,17 +51,17 @@
         //声明子类
         function SubType(name, age) {
             // 当子类构造函数调用的时候 是不是首先要调用父类的 构造器 所以这里通过 call方法改变this的指向来实现子类调用父类方法
-            SuperType.call(this, name, age)
+            SuperType.call(this, name, age) ;
         }
         SubType.prototype.sayAge = function () {
-            console.log(this.age)
+            console.log(this.age) ;
         }
         // initHeritPrototype方法
         function initHeritPrototype(SubType, SuperType) {
-            var prototype = object(SuperType.prototype); //传递的是父实例的原型对象
+            var fNewObj = object(SuperType.prototype); //传递的是父实例的原型对象
             //prototype.constructor=SubType  //设置子实例的constructor
             //让子类原型 指向 一个
-            SubType.prototype = prototype
+            SubType.prototype = fNewObj ;
         }
         initHeritPrototype(SubType, SuperType)
         //逻辑思想 这里其实就是一句话：   先让F的原型指向SuperType.prototype然后再让SubType.prototype指向F.prototype

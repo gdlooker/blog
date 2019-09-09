@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>javascript高程组合式继承</title>
+</head>
+
+<body>
+    <div>
+        组合式继承:指的是将原型链和借用构造函数的技术组合到一块
+    </div>
+    <script type="text/javascript">
+     // 定义一个父类
+     function SuperType(name,age){
+         console.log('父类构造器调用')
+         this.name=name;
+         this.age=age;
+     }
+     //定义原型类方法
+     SuperType.prototype.sayName=function(){
+           console.log('super说名字 '+this.sayName); //指向调用者的名字
+     }
+
+     //定义子类
+     function SubType(name,age){
+         console.log('子类构造器调用')
+         //在它之前先调用父类构造器
+         SuperType.call(this,name,age)
+         this.name=name;
+         this.age=age;
+     }
+
+     //比如 原型自己声明 自己的方法
+     SubType.prototype.subSayName=function(){
+          //这个是函数表达式
+          console.log('儿子说名字'+this.name)
+     }
+      
+     //让子类的原型对象 其实new的时候就是做了这么一件事情
+     SubType.prototype=new SuperType()
+     //创建子类的实例
+     var subType=new SubType() ;
+    </script>
+</body>
+
+</html>
