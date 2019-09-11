@@ -32,5 +32,12 @@ varchar（0-65535字节）：变长字符串  设置多长，用户输入多少�
 
 1.创建表
 
-create table tabName(id interger  primary key autoincrement,name text varchar(60) not null,age )
+```
+//建表语句  COMMENT 是注释
+CREATE TABLE student(
+  id INT PRIMARY KEY AUTO_INCREMENT COMMENT '学号',
+  name VARCHAR(200) COMMENT '姓名',
+  age  int COMMENT '年龄'
+) COMMENT='学生信息'
+```
 
