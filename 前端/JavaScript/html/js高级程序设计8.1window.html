@@ -19,10 +19,11 @@
             min-height: 100%;
             background-color: red;
         }
+
         .rect {
             width: 100px;
             height: 100px;
-            background-color: blueviolet ;
+            background-color: blueviolet;
             border: 2px;
             padding: 2px;
             margin: 3px;
@@ -32,9 +33,9 @@
 
 <body>
     <div id="container">
-         <div class="rect">
+        <div class="rect">
 
-         </div>
+        </div>
     </div>
     <script type="text/javascript">
         //因为浏览器方式 IE Safari 
@@ -43,24 +44,28 @@
         //获取 window的窗口距离 要使用三元运算符来
 
         //这2个属性表示从屏幕的左边到 弹出显示窗口的距离 以及屏幕的上面到窗口顶部的距离
-        var leftPos=typeof window.screenLeft =='number' ?window.screenLeft:window.screenX ;
-        var topPos=typeof window.screenTop=='number' ? window.screenTop:window.screenY;
-
+        //这个方法在不同的浏览器 不同 在 Chrome、Firefox和 Safari中， screenY 或 screenTop
+        //中保存的是整个浏览器窗口相对于屏幕的坐标值，即在窗口的 y 轴坐标为 0 时返回 0
+        var leftPos = typeof window.screenLeft == 'number' ? window.screenLeft : window.screenX;
+        var topPos = typeof window.screenTop == 'number' ? window.screenTop : window.screenY;
+        console.log('leftPos:', leftPos)
+        console.log('topPos:', topPos)
+        window.moveTo(300,200)
         //获取clientWidth/Height  clientWidth/heigth的宽高度=width/height+padding
-        var rect=document.getElementsByClassName('rect')
-        var clientHeight= rect[0].clientHeight
-        var clientWidth=rect[0].clientWidth;
-        var offsetWidth=rect[0].offsetWidth
-        var offsetHeight=rect[0].offsetHeight
-        console.log('clientHight:',clientHeight)  
-        console.log('clientWidth:',clientWidth)
-        console.log('offsetWidth',offsetWidth)
-        console.log('offsetHeight',offsetHeight)
-      
-         //outerWidth 和 outerHeight 返回浏览器窗口本身的尺寸
-         window.resizeTo(100, 100);
-         console.log('xxx',window.innerWidth)
-        console.log('xxx',window.outerWidth) //返回浏览器窗口本身大小
+        var rect = document.getElementsByClassName('rect')
+        var clientHeight = rect[0].clientHeight
+        var clientWidth = rect[0].clientWidth;
+        var offsetWidth = rect[0].offsetWidth
+        var offsetHeight = rect[0].offsetHeight
+        console.log('clientHight:', clientHeight)
+        console.log('clientWidth:', clientWidth)
+        console.log('offsetWidth', offsetWidth)
+        console.log('offsetHeight', offsetHeight)
+
+        //outerWidth 和 outerHeight 返回浏览器窗口本身的尺寸
+        window.resizeTo(100, 100);
+        console.log('xxx', window.innerWidth)
+        console.log('xxx', window.outerWidth) //返回浏览器窗口本身大小
     </script>
 
 </body>

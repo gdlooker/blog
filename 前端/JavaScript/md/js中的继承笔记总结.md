@@ -46,9 +46,9 @@ SubType.prototype = new SuperType();
 
 ```javascript
 //临时性构造函数
-function object(){
+function object(obj){
      function F(){} 
-     F.prototype = o; 
+     F.prototype = obj; 
      return new F();
 }
 
@@ -62,6 +62,13 @@ var anotherPerson = object(person);
 **五 寄生式继承 就是跟工厂模式一样**：
 
 ```javascript
+//临时性构造函数
+function object(obj){
+     function F(){} 
+     F.prototype = obj; 
+     return new F();
+}
+
 //工厂方法
 function createAnother(original){ 
  var clone = object(original); //通过调用函数创建一个新对象
