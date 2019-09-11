@@ -24,7 +24,7 @@
         }
         //第一寄生方式 跟工厂模式一样
         function createObject(original) {
-            var clone = object(); //调用object工厂方法创建实例
+            var clone = object(original); //调用object工厂方法创建实例
             clone.sayName=function(){
                  console.log('我是sayName')
             }

@@ -7,15 +7,15 @@
 **二 借用构造函数来实现继承:**
 
 ```javascript
-function SupterType(){
+function SuperType(){
    this.colors = ["red", "blue", "green"];
 }
 function SubType(){
-    //继承了 SuperType 
+    //调用了父类SuperType 构造方法
  SuperType.call(this);
 }
 //创建子类实例
-
+SubType.prototype=new SuperType();
 ```
 
 **三 组合继承实例代码**：
@@ -97,11 +97,12 @@ function object(superObj){
 
 //定义父类
 function SuperType(){
-    
+    console.log('父类构造方法被调用了')
 }
 //定义子类
 function SubType(){
-    
+    //还要调用父类构造方法
+    SupterType.call(this)
 }
  //创建父类实例
  var superType=new SuperType();
