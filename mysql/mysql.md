@@ -41,3 +41,19 @@ CREATE TABLE student(
 ) COMMENT='学生信息'
 ```
 
+#### jdbc使用
+
+```java
+ //step1 引入驱动架包
+ //step2 注册驱动  Class.className()
+Class.className('com.mysql.xxx') ;
+ // step3 链接驱动
+  Connection connection=DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql","root","root");
+//step4 statement对象获取
+Statement statement=connection.createStatement()
+  // step5 执行sql语句
+  int line=statement.executeUpdate("insert into tabName(id,name,sex) values(4,'name_lisi','男')");
+// line是插入返回的行数
+
+```
+
