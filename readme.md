@@ -1,12 +1,12 @@
 ### 博客笔记
 ##### html练习示例代码
-* [`html练习示例`](https://github.com/gdchent/blog/tree/master/前端/html)
+* [`html练习示例`](https://github.com/gdchent/blog/tree/master/前端/JavaScript/html)
 ##### web前端md文档笔记
 * [`你不知道的js上卷`](https://github.com/gdchent/blog/tree/master/前端/JavaScript/md/你不知道的js上卷.md)
-* [`使用ts创建RN项目笔记`](https://github.com/gdchent/blog/tree/master/前端/md/使用ts创建RN项目笔记.md)
-* [`javascript基本数据类型操作笔记`](https://github.com/gdchent/blog/tree/master/前端/md/javascript基本数据类型操作笔记.md)
-* [`js高级程序设计`](https://github.com/gdchent/blog/tree/master/前端/md/js高级程序设计.md)
-* [`js中的继承笔记总结`](https://github.com/gdchent/blog/tree/master/前端/md/js中的继承笔记总结.md)
+* [`使用ts创建RN项目笔记`](https://github.com/gdchent/blog/tree/master/前端/JavaScript/md/使用ts创建RN项目笔记.md)
+* [`javascript基本数据类型操作笔记`](https://github.com/gdchent/blog/tree/master/前端/JavaScript/md/javascript基本数据类型操作笔记.md)
+* [`js高级程序设计`](https://github.com/gdchent/blog/tree/master/前端/JavaScript/md/js高级程序设计.md)
+* [`js中的继承笔记总结`](https://github.com/gdchent/blog/tree/master/前端/JavaScript/md/js中的继承笔记总结.md)
 ##### react-native
 * [`react-native-redux架构示例代码`](https://github.com/gdchent/react-native-redux)
 * [`react-native热更新code-push`](https://github.com/gdchent/NavigationApp)
