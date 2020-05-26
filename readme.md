@@ -25,7 +25,7 @@
 ##### springMvc
 * [`springMvc工程示例代码`](https://github.com/gdchent/gdchentspringmvc)
 ##### spring boot
-* [`springBoot工程示例代码`](https://github.com/gdchent/springsell)
+* [`springBoot工程示例代码`](https://github.com/gdchent/springbootsell)
 
 ##### Android原生热修复
 * [`Android原生热修复示例代码`](https://github.com/gdchent/nativehotfix)
