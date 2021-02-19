@@ -17,12 +17,19 @@
         var p = /[bc]at/g;//
         var regExp = new RegExp('[bc]at', 'g'); //跟上面是等价的
         console.log(p.global)
-        console.log(regExp.global)  //表示是否设置了  g标志
+        console.log(regExp.global===p.global)  //表示是否设置了  g标志
         console.log('reg', regExp.ignoreCase)
         console.log('multiline', p.multiline) //是否设置了m标志
         console.log('lastIndex', p.lastIndex) //整数
         var res = regExp.test('ckkdkdkbatddd');
         console.log(res)
+        console.log('============================正则表达式================================')
+        let hd='gdchent1992'
+        //比如这个hd字符串
+        console.log(Number.isNaN(hd))
+        console.log(hd.match(/\d/g))
+        var re = /pattern/w;
+        console.log('re',re)
     </script>
 </body>
 

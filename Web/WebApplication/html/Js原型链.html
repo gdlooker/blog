@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Js原型链操作</title>
+</head>
+
+<body>
+    <div id="container">
+
+    </div>
+    <script type="text/javascript">
+
+        //Javascript原型重新复习
+        function Person(name, age) {
+            this.name = name;
+            this.age = age;
+        }
+        //在创建对象之前输出Person
+        console.log('Person函数打印', Person)
+        /* 
+        当我们定义一个函数的时候 这个时候输出函数的原型对象 
+         这个时候默认输出 2个 
+          一个是__proto__对象，
+         另外一个是constructor函数
+        */
+        console.log('Person.prototpe', Person.prototype)
+        //接下来当我们创建对象的时候 这个时候我们输出对象的原型对象 
+        var p = new Person("lisi", 23)
+        console.log('输出我们的p对象', p)
+        console.log('熟悉对象的原型对象', p.__proto__)
+        console.log(Person.prototype.constructor === Person)
+        console.log(Array.prototype.constructor === Array)
+        console.log(Date.prototype.constructor === Date)
+
+        function Teacher(name, age) {
+            this.name = name;
+            this.age = age;
+        }
+        function Student(name, age) {
+            this.name = name;
+            this.age = age;
+        }
+        Teacher.prototype=new Person('teach_name',33)
+        Student.prototype=new Person('student_name',22)
+        console.log('老师的原型',Teacher.prototype)
+        console.log('输出老师原型对象的constructor方法',Teacher.prototype.constructor)
+        console.log('学生的原型',Student.prototype)
+        console.log('输出学生原型对象的constructor方法',Student.prototype.constructor)
+        console.log('老师跟学生的原型对象是不是相等:',Teacher.prototype.constructor===Teacher.prototype.constructor)
+    </script>
+</body>
+
+</html>

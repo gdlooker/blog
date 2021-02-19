@@ -61,19 +61,20 @@
         //every() 对数组的每一项都返回true则返回true 否则返回false
         var everyList = [10, 15, 19, 99, 36, 4]
         var resEvery = everyList.every(function (value, index) {
-            console.log('item遍历项', value)
+            console.log('every_item遍历项', value)
             return value < 19
         })
-        console.log(everyList)
+        console.log("数组every用法",everyList)
         console.log(resEvery)   // 输出遍历了3次  当 遍历到item=19的时候返回false
 
-        console.log('=======================js数组的every函数的用法===============================')
+        console.log('=======================js数组的some函数的用法===============================')
         //如果这个数组里面有一个东西返回为true则 立即终止 不再遍历 
         var someList = [10, 15, 19, 99, 36, 4]
-        someList.some(function (value, index) {
-            console.log("item",value); //输出 10  15  19  99  因为99>19
+        const someArray=someList.some(function (value, index) {
+            console.log("some_item",value); //输出 10  15  19  99  因为99>19
             return value > 19
         })
+        console.log('someArray',someArray)
         console.log('===============javascript的reduce用法===========')
 
         var reduceArray=[

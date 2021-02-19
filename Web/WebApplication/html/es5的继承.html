@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript的es5继承</title>
+    <style type="text/css">
+         .container{
+              display: flex;
+              flex-direction: column;
+              flex: 1;
+              align-items: center;
+         }
+    </style>
+</head>
+<body>
+      <div class="container">
+            <div>测试es5的继承</div>
+      </div>
+      <script type="text/javascript">
+           
+           //用es5声明一个类
+           function Person(name,age){
+                //默认初始值
+                this.name=name
+                this.age=age
+                this.run=function(){
+                    console.log('this.name',this.name)
+                }
+           }
+           Person.prototype.sex='男';
+           Person.prototype.work=function(){
+                 console.log(this.name,this.age)
+           }
+           var p=new Person()
+           p.work()
+
+           //对象冒充继承
+           function Web(){
+                Person.call(this)
+           }
+           var web=new Web()
+           web.run() 
+           console.log('web',web)
+           //web.work() 错误
+      </script>
+</body>
+</html>

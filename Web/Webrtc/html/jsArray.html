@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <div>测试数组</div>
+</head>
+
+<body>
+    <script type="text/javascript">
+         const array=['test1','test2','test3','test4']
+         const newArray=array.slice(0,2) //从0开始截取2个元素
+         console.log('输出slice截取的新元素',newArray)
+         const item=array.pop()
+         console.log('pop弹出的数组元素',item)
+         console.log("原数组不发生改变array",array)
+         const res=array.splice(0,2,"test5",'test6','test7')
+         console.log('splice替换的元素',res)
+         console.log(array)
+    </script>
+</body>
+
+</html>
